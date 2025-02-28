@@ -24,7 +24,7 @@
   <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
 
   <!-- Custom styles for this template -->
-  <link href="../css/style.css" rel="stylesheet" />
+  <link href=".../css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="../css/responsive.css" rel="stylesheet" />
 </head>
@@ -135,24 +135,30 @@
                     <td> 
                                            
                       <div style="position: relative;">
-                        <input type="text" id="referencia" /> 
-                        
-                        <button onclick="mostrarOpciones()" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-                        <div id="opcionesReferencia" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%;">
-                          <div>
-                            <strong>Referencia 1</strong>
-                            <img src="img1.jpg" alt="Imagen 1" style="width: 100px; height: auto;" />
-                          </div>
-                          <div>
-                            <strong>Referencia 2</strong>
-                            <img src="img2.jpg" alt="Imagen 2" style="width: 100px; height: auto;" />
-                          </div>
+                        <input type="text" id="referencia" />
+                        <button onclick="mostrarOpciones()" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
+                        <div id="opcionesReferencia" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto;">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                                <div>
+                                    <strong>Flower</strong>
+                                    <img src="imagenes/535.jpg" alt="Flower" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                </div>
+                                <div>
+                                    <strong>Heart</strong>
+                                    <img src="imagenes/554.jpg" alt="Heart" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                </div>
+                                <div>
+                                    <strong>Skirt</strong>
+                                    <img src="imagenes/547.jpg" alt="Skirt" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                </div>
+                                <div>
+                                    <strong>Short</strong>
+                                    <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                </div>
+                            </div>
                         </div>
-
-                      </div>
+                      </div>                                  
                     </td>
-
-                    
 
                     <td><input type="text" id="cantidad" /></td>
                     <td><input type="text" id="valorUnidad" /></td>
@@ -279,13 +285,19 @@
 
   <script>
     function mostrarOpciones() {
-      var opciones = document.getElementById('opcionesReferencia');
-      if (opciones.style.display === 'none') {
+    var opciones = document.getElementById('opcionesReferencia');
+    if (opciones.style.display === 'none') {
         opciones.style.display = 'block';
-      } else {
+    } else {
         opciones.style.display = 'none';
-      }
     }
+    }
+
+    function seleccionarOpcion(img) {
+        var referencia = document.getElementById('referencia');
+        referencia.value = img.alt;
+    }
+
     </script>
 
 </body>

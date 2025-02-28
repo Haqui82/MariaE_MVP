@@ -875,7 +875,11 @@ a:focus {
 /* Fin de botones de las fotos seccion inicio*/
 
 /* order  section*/
-/* footer section*/
+.order_button {
+  width: 80%;
+  
+}
+/* end order section*/
 
 /* footer section*/
 .footer_section {
