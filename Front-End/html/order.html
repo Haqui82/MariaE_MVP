@@ -128,53 +128,49 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-
-                    
-                    
-                    <td> 
-                                           
+                  <tr>                
+                    <td>
                       <div style="position: relative;">
-                        <input type="text" id="referencia" />
-                        <button onclick="mostrarOpciones()" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-                        <div id="opcionesReferencia" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto;">
-                            <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                                <div>
-                                    <strong>Flower</strong>
-                                    <img src="imagenes/535.jpg" alt="Flower" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
-                                </div>
-                                <div>
-                                    <strong>Heart</strong>
-                                    <img src="imagenes/554.jpg" alt="Heart" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
-                                </div>
-                                <div>
-                                    <strong>Skirt</strong>
-                                    <img src="imagenes/547.jpg" alt="Skirt" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
-                                </div>
-                                <div>
-                                    <strong>Short</strong>
-                                    <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
-                                </div>
-                            </div>
-                        </div>
-                      </div>                                  
+                          <input type="text" id="referencia" />
+                          <button onclick="mostrarOpciones()" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
+                          <div id="opcionesReferencia" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto;">
+                              <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                                  <div>
+                                      <strong>Flower</strong>
+                                      <img src="imagenes/535.jpg" alt="Flower" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                  </div>
+                                  <div>
+                                      <strong>Heart</strong>
+                                      <img src="imagenes/554.jpg" alt="Heart" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                  </div>
+                                  <div>
+                                      <strong>Skirt</strong>
+                                      <img src="imagenes/547.jpg" alt="Skirt" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                  </div>
+                                  <div>
+                                      <strong>Short</strong>
+                                      <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this)" />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                     </td>
-
-                    <td><input type="text" id="cantidad" /></td>
+                    <td><input type="text" id="cantidad" oninput="validarCantidad(this)" /></td>
                     <td><input type="text" id="valorUnidad" /></td>
                     <td><input type="text" id="valorTotal" /></td>
+                  
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <div class="d-flex">
-              <button id="enviar" disabled>
-                ENVIAR
+              <button id="plus" onclick="agregarFila()">
+                +
               </button>
 
               <button id="enviar" disabled>
-                +
+                Enviar
               </button>
             </div>
             
@@ -184,7 +180,7 @@
     </div>
   </section>
 
-  <!-- end contact section -->
+  <!-- end order section -->
 
   <!-- info section -->
 
@@ -285,20 +281,78 @@
 
   <script>
     function mostrarOpciones() {
-    var opciones = document.getElementById('opcionesReferencia');
-    if (opciones.style.display === 'none') {
-        opciones.style.display = 'block';
-    } else {
-        opciones.style.display = 'none';
-    }
+      var opciones = document.getElementById('opcionesReferencia');
+      if (opciones.style.display === 'none') {
+          opciones.style.display = 'block';
+      } else {
+          opciones.style.display = 'none';
+      }
     }
 
     function seleccionarOpcion(img) {
         var referencia = document.getElementById('referencia');
         referencia.value = img.alt;
+        actualizarPrecio();
     }
 
-    </script>
+    function validarCantidad(input) {
+        input.value = input.value.replace(/[^0-9]/g, '');
+        calcularTotal();
+    }
+
+    function obtenerPrecio(referencia) {
+        var productos = {
+            "Flower": 70000,
+            "Heart": 70000,
+            "Skirt": 60000,
+            "Short": 50000,
+            // Agrega más productos según sea necesario
+        };
+        return productos[referencia] || 0;
+    }
+
+    function actualizarPrecio() {
+        var referencia = document.getElementById('referencia').value;
+        var precio = obtenerPrecio(referencia);
+        document.getElementById('valorUnidad').value = precio;
+        calcularTotal();
+    }
+
+    function calcularTotal() {
+        var cantidad = parseInt(document.getElementById('cantidad').value) || 0;
+        var valorUnidad = parseInt(document.getElementById('valorUnidad').value) || 0;
+        var valorTotal = cantidad * valorUnidad;
+        document.getElementById('valorTotal').value = valorTotal;
+    }
+
+    function agregarFila() {
+  const tabla = document.getElementById("dataTable").querySelector("tbody");
+  const primeraFila = tabla.querySelector("tr");
+
+  // Clonar la primera fila para heredar estructura y funcionalidades
+  const nuevaFila = primeraFila.cloneNode(true);
+
+  // Limpiar valores de los inputs en la nueva fila
+  const inputs = nuevaFila.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.value = ""; // Limpia los valores
+    if (input.id) {
+      input.removeAttribute("id"); // Elimina el ID para evitar duplicados
+    }
+  });
+
+  // Configurar eventos nuevamente en elementos específicos
+  const botonOpciones = nuevaFila.querySelector(".order_button");
+  botonOpciones.onclick = (event) => mostrarOpciones(event);
+
+  // Agregar la nueva fila antes del botón "+"
+  tabla.appendChild(nuevaFila);
+}
+
+
+
+
+  </script>
 
 </body>
 
