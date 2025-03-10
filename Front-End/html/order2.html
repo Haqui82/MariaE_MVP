@@ -115,7 +115,7 @@
         <div class="col-md-6 col-lg-5 px-0">
           <form action="#"> 
             
-            <p>Escoja la(s) referencia(s) y la cantidad a llevar.</p>
+            <p>Escoja la(s) referencia(s), la(s) talla(s) y cantidad(es) a llevar.</p>
 
             <div>
               <table id="dataTable">
@@ -131,22 +131,39 @@
                 </thead>
                 <tbody>
                   <tr>                   
-                  
+                    <!-- la estructura y cantidad de las filas -->
+                    <!--  se crea al usar el botón con "id=plus" -->
+                    <!--  y hacer uso de la función "agregarFila()" --> 
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <div class="d-flex">
-            <button id="plus" onclick="agregarFila()">
-              +
-            </button>
+              <button id="plus" onclick="agregarFila()">
+                +
+              </button>
 
               <button id="enviar" disabled>
                 Enviar
               </button>
-            </div>
-            
+
+              <tr>
+                <th>
+                  <style>
+                    #total_strong {                      
+                      margin-left: 355px;
+                    }
+
+                    #total_input {
+                      max-width: 110px; /* Define el ancho máximo del input */
+                    }
+                  </style>
+                  <strong id="total_strong">Total:</strong>
+                  <input type="text" id="total_input"/>
+                </th>
+              </tr>
+            </div>            
           </form>
         </div>
       </div>
@@ -262,30 +279,33 @@
         agregarFila();
     };
 
+    // Función para mostrar las opciones de referencias
     function mostrarOpciones(idFila) {
       const opciones = document.getElementById(`opcionesReferencia-${idFila}`);
       opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
     }
 
+    // Función para elegir una de las opciones de referencias
     function seleccionarOpcion(img, idFila) {
       const referencia = document.getElementById(`referencia-${idFila}`);
       referencia.value = img.alt;
+      document.getElementById(`opcionesReferencia-${idFila}`).style.display = 'none'; // Oculta las opciones
       actualizarPrecio(idFila);
     }
 
     // Función para mostrar las opciones de tallas
-function mostrarTallas(idFila) {
-    const opciones = document.getElementById(`opcionesTallas-${idFila}`);
-    opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
-}
+    function mostrarTallas(idFila) {
+        const opciones = document.getElementById(`opcionesTallas-${idFila}`);
+        opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
+    }
 
-// Función para seleccionar una talla
-function seleccionarTalla(div, idFila) {
-    const talla = div.textContent; // Obtén el texto dentro del div
-    const inputTalla = document.getElementById(`tallas-${idFila}`);
-    inputTalla.value = talla;
-    document.getElementById(`opcionesTallas-${idFila}`).style.display = 'none'; // Oculta las opciones
-}
+    // Función para seleccionar una talla
+    function seleccionarTalla(div, idFila) {
+        const talla = div.textContent; // Obtén el texto dentro del div
+        const inputTalla = document.getElementById(`tallas-${idFila}`);
+        inputTalla.value = talla;
+        document.getElementById(`opcionesTallas-${idFila}`).style.display = 'none'; // Oculta las opciones
+    }
 
     function validarCantidad(input, idFila) {
       input.value = input.value.replace(/[^0-9]/g, '');
@@ -310,11 +330,24 @@ function seleccionarTalla(div, idFila) {
       calcularTotal(idFila);
     }
 
+    function calcularTotalTotal(contador) {
+      let sumaTotal = 0;
+      for (let i = 1; i <= contador; i++) {
+        const valorTotal = document.getElementById(`valorTotal-${i}`);
+        if (valorTotal) { // Verifica que el elemento exista
+          sumaTotal += parseInt(valorTotal.value) || 0;
+        }
+      }
+      // Actualiza el campo total_input con el resultado
+      document.getElementById("total_input").value = sumaTotal;
+    }
+
     function calcularTotal(idFila) {
       const cantidad = parseInt(document.getElementById(`cantidad-${idFila}`).value) || 0;
       const valorUnidad = parseInt(document.getElementById(`valorUnidad-${idFila}`).value) || 0;
       const valorTotal = cantidad * valorUnidad;
       document.getElementById(`valorTotal-${idFila}`).value = valorTotal;
+      calcularTotalTotal(contador);
     }
 
     function agregarFila() {
@@ -357,25 +390,54 @@ function seleccionarTalla(div, idFila) {
         
         
         <td>
-            <div style="position: relative;">
-                <input type="text" id="tallas-${contador}" />
-                <button onclick="mostrarTallas(${contador})" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-                <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto;">
-                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                        <div onclick="seleccionarTalla(this, ${contador})">4</div>
-                        <div onclick="seleccionarTalla(this, ${contador})">6</div>
-                        <div onclick="seleccionarTalla(this, ${contador})">8</div>
-                        <div onclick="seleccionarTalla(this, ${contador})">10</div>
-                        <div onclick="seleccionarTalla(this, ${contador})">12</div>
-                        <div onclick="seleccionarTalla(this, ${contador})">16</div>
-                    </div>
-                </div>
-            </div>
+          <style>
+            #tallas-${contador} {
+              max-width: 60px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
+              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+            }
+          </style>        
+          <div style="position: relative;">
+              <input type="text" class="input_talla" id="tallas-${contador}"/>
+              <button onclick="mostrarTallas(${contador})" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
+              <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto;">
+                  <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                      <div onclick="seleccionarTalla(this, ${contador})">4</div>
+                      <div onclick="seleccionarTalla(this, ${contador})">6</div>
+                      <div onclick="seleccionarTalla(this, ${contador})">8</div>
+                      <div onclick="seleccionarTalla(this, ${contador})">10</div>
+                      <div onclick="seleccionarTalla(this, ${contador})">12</div>
+                      <div onclick="seleccionarTalla(this, ${contador})">16</div>
+                  </div>
+              </div>
+          </div>
         </td>
         
-        <td><input type="text" id="cantidad-${contador}" oninput="validarCantidad(this, ${contador})" /></td>
-        <td><input type="text" id="valorUnidad-${contador}" /></td>
-        <td><input type="text" id="valorTotal-${contador}" /></td>
+        <td>
+          <style>
+            #cantidad-${contador} {
+              max-width: 80px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
+              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+            }
+          </style>
+          <input type="text" id="cantidad-${contador}" oninput="validarCantidad(this, ${contador})" />
+        </td>
+        <td>
+          <style>
+            #valorUnidad-${contador} {
+              max-width: 110px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
+              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+            }
+          </style>
+          <input type="text" id="valorUnidad-${contador}" />
+        </td>
+        <td>
+          <style>
+            #valorTotal-${contador} {
+              max-width: 110px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
+              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+            }
+          </style>
+          <input type="text" id="valorTotal-${contador}" /></td>
       `;
 
       // Agrega la fila a la tabla
@@ -384,7 +446,9 @@ function seleccionarTalla(div, idFila) {
       // Incrementa el contador para los próximos IDs
       contador++;
     }
+
     
+
   </script>
 
 </body>
