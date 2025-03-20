@@ -132,14 +132,14 @@
     const password = document.getElementById(passwordId).value;
 
     // Imprime los valores en la consola del navegador
-    console.log('Número de Documento:', numDoc);
-      console.log('Contraseña:', password);
+    /*console.log('Número de Documento:', numDoc);
+    console.log('Contraseña:', password);*/
 
     // Valida si el número de documento fue ingresado
-    if (!numDoc) {
-        alert('Por favor ingrese un número de documento');
-        return;
-    }  
+    if (!numDoc || !password) {
+      alert('Por favor ingrese los datos requeridos');
+      return;
+    }
 
     // URL base para la consulta a la base de datos
     const baseUrl = 'http://localhost:10000/api/entry/clientes/num_doc_cliente/';
@@ -147,28 +147,34 @@
 
     // Realizar la consulta a la base de datos
     fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then(response => response.json())
     .then(data => {
       // Imprime el JSON recibido en la consola
-      console.log('Datos recibidos:', data);
+      //console.log('Datos recibidos:', data);
 
-      // Muestra un mensaje de bienvenida si el éxito está presente
-      if (data.success) {
-          alert('Bienvenid@');
-          window.location.href = 'order.html'; // Redirige a otra página
+      // Verifica si se recibió una respuesta válida
+      if (!data || Object.keys(data).length === 0) {
+        alert('Usuario no registrado');
+        setTimeout(() => {}, 3000); // Muestra el mensaje por 3 segundos
+        return;
+      }
+
+      // Compara los datos ingresados con los datos del JSON
+      if (numDoc === data.num_doc_cliente && password === data.password_cliente) {
+        window.location.href = 'user.html'; // Redirige a otra página
       } else {
-          alert('Error en la respuesta: ' + data.message);
+        alert('Usuario no encontrado');        
       }
     })
-      .catch(error => {
-          console.error('Error en la consulta:', error);
+    .catch(error => {
+      console.error('Error en la consulta:', error);
+      alert('Usuario no registrado');      
     });
-
   }
 
   // Asigna un listener al botón con id="ingresarButton"
@@ -179,7 +185,6 @@
     validandoUsuario('doc_num', 'password');
   });
 </script>
-
   
 
   <!-- jQuery -->
