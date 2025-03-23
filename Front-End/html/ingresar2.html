@@ -125,28 +125,14 @@
 </footer>  
   
 <script>
-  // Función que recibe los IDs de los inputs
-  function validandoUsuario(docNumId, passwordId) {
-    // Obtiene los valores de los inputs por sus IDs
-    const numDoc = document.getElementById(docNumId).value;
-    const password = document.getElementById(passwordId).value;
-
-    // Imprime los valores en la consola del navegador
-    /*console.log('Número de Documento:', numDoc);
-    console.log('Contraseña:', password);*/
-
-    // Valida si el número de documento fue ingresado
-    if (!numDoc || !password) {
-      alert('Por favor ingrese los datos requeridos');
-      return;
-    }
-
+  //-----------------------------------------
+  // Valida si el usuario es administrador
+  function validandoAdmin(pw){ 
     // URL base para la consulta a la base de datos
-    const baseUrl = 'http://localhost:10000/api/entry/clientes/num_doc_cliente/';
-    const url = baseUrl + numDoc; // Reemplaza la parte final con el número de documento ingresado
-
+    const baseUrl_1 = 'http://localhost:10000/api/entry/administrador/password/';
+    const url_1 = baseUrl_1 + pw; // Reemplaza la parte final con el número de documento ingresado
     // Realizar la consulta a la base de datos
-    fetch(url, {
+    fetch(url_1, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -165,8 +151,8 @@
       }
 
       // Compara los datos ingresados con los datos del JSON
-      if (numDoc === data.num_doc_cliente && password === data.password_cliente) {
-        window.location.href = 'user.html'; // Redirige a otra página
+      if (pw === data.password) {
+        window.location.href = 'admin.html'; // Redirige a otra página
       } else {
         alert('Usuario no encontrado');        
       }
@@ -175,6 +161,66 @@
       console.error('Error en la consulta:', error);
       alert('Usuario no registrado');      
     });
+      return;
+  }
+  
+  //-----------------------------------------
+  // Función que recibe los IDs de los inputs
+  function validandoUsuario(docNumId, passwordId) {
+    // Obtiene los valores de los inputs por sus IDs
+    const numDoc = document.getElementById(docNumId).value;
+    const password = document.getElementById(passwordId).value;
+
+    // Imprime los valores en la consola del navegador
+    /*console.log('Número de Documento:', numDoc);
+    console.log('Contraseña:', password);*/
+
+    // Valida si el número de documento fue ingresado
+    if (!numDoc || !password) {
+      alert('Por favor ingrese los datos requeridos');
+      return;
+    }
+    //---------------------------------------
+    // Valida si el usuario es administrador
+    if (numDoc == 2) {
+      validandoAdmin(password);
+    }else{
+      //----------------------------------------
+      // URL base para la consulta a la base de datos
+      const baseUrl = 'http://localhost:10000/api/entry/clientes/num_doc_cliente/';
+      const url = baseUrl + numDoc; // Reemplaza la parte final con el número de documento ingresado
+
+      // Realizar la consulta a la base de datos
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Imprime el JSON recibido en la consola
+        //console.log('Datos recibidos:', data);
+
+        // Verifica si se recibió una respuesta válida
+        if (!data || Object.keys(data).length === 0) {
+          alert('Usuario no registrado');
+          setTimeout(() => {}, 3000); // Muestra el mensaje por 3 segundos
+          return;
+        }
+
+        // Compara los datos ingresados con los datos del JSON
+        if (numDoc === data.num_doc_cliente && password === data.password_cliente) {
+          window.location.href = 'user.html'; // Redirige a otra página
+        } else {
+          alert('Usuario no encontrado');        
+        }
+      })
+      .catch(error => {
+        console.error('Error en la consulta:', error);
+        alert('Usuario no registrado');      
+      });
+    }
   }
 
   // Asigna un listener al botón con id="ingresarButton"
