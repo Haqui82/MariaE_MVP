@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel de Productos</title>
+    <style>
+        .carousel-container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 25%; /* Mostrar 4 imágenes */
+            box-sizing: border-box;
+            padding: 10px;
+            position: relative; /* Para posicionar los elementos dentro del contenedor */
+            text-align: center;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+        }
+
+        .carousel-item .checkbox {
+            position: absolute;
+            bottom: 10px; /* Mueve la casilla a la esquina inferior */
+            left: 10px;  /* Alinea la casilla a la izquierda */
+            z-index: 2; /* Para que el checkbox aparezca sobre la imagen */
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-buttons button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .carousel-buttons button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto1" name="productos" value="Producto 1">
+                <img src="imagenes/535.jpg" alt="Producto 1">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto2" name="productos" value="Producto 2">
+                <img src="imagenes/554.jpg" alt="Producto 2">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto3" name="productos" value="Producto 3">
+                <img src="imagenes/547.jpg" alt="Producto 3">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto4" name="productos" value="Producto 4">
+                <img src="imagenes/548.jpg" alt="Producto 4">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto5" name="productos" value="Producto 5">
+                <img src="imagenes/540.jpg" alt="Producto 5">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto6" name="productos" value="Producto 6">
+                <img src="imagenes/536.jpg" alt="Producto 6">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto7" name="productos" value="Producto 7">
+                <img src="imagenes/553.jpg" alt="Producto 7">
+            </div>
+            <div class="carousel-item">
+                <input type="checkbox" class="checkbox" id="producto8" name="productos" value="Producto 8">
+                <img src="imagenes/789.jpg" alt="Producto 8">
+            </div>
+        </div>
+        <div class="carousel-buttons">
+            <button id="prev">Anterior</button>
+            <button id="next">Siguiente</button>
+        </div>
+    </div>
+
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const totalGroups = 2; // Dos grupos de 4 imágenes
+        let currentIndex = 0;
+
+        function updateButtons() {
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === totalGroups - 1;
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateButtons();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < totalGroups - 1) {
+                currentIndex++;
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateButtons();
+            }
+        });
+
+        updateButtons(); // Inicializa los botones al cargar
+    </script>
+</body>
+</html>
