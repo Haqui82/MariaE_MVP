@@ -12,23 +12,46 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
 
-  <title>
-    Maria E. girls Fashion Confecciones.
-  </title>
+  <title>Maria E. girls Fashion Confecciones.</title>
 
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
+  <!-- Bootstrap Core CSS -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
   <!-- Custom styles for this template -->
   <link href="../css/style.css" rel="stylesheet"/>
-  <!-- responsive style -->
   <link href="../css/responsive.css" rel="stylesheet" />
-</head>
-<body>
 
+  <style>
+    .carousel-container {
+      margin: auto;
+      text-align: center;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: auto;
+    }
+    .checkbox {
+      position: absolute;
+      bottom: 10px; /* Mueve la casilla a la esquina inferior */
+      left: 10px;   /* Alinea la casilla a la izquierda */
+      z-index: 2;   /* Para que el checkbox aparezca sobre la imagen */
+    }
+    .carousel-buttons button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
   <!-- header section starts -->
   <header class="header_section">
     <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -60,28 +83,37 @@
             <a class="nav-link" href="contact.html">Contáctenos</a>
           </li>
         </ul>
-        <div class="user_option">
-          <a href="">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <span>Ingresar</span>
-          </a>
-          <a href="">
-            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-          </a>
-          <form class="form-inline">
-            <button class="btn nav_search-btn" type="submit">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
-        </div>
       </div>
     </nav>
   </header>
   <!-- end header section -->
 
-  <!-- Contenido de la página -->
-
-  <!-- las imagenes van aqui--> 
+  <!-- Contenido del Carrusel -->
+  <div class="carousel-container mt-5">
+    <h2 class="text-center mb-4">Carrusel de Imágenes</h2>
+    <div class="owl-carousel owl-theme">
+      <div class="item">
+        <input type="checkbox" class="checkbox" id="producto1" name="productos" value="Producto 1">
+        <img src="imagenes/535.jpg" alt="Producto 1">
+      </div>
+      <div class="item">
+        <input type="checkbox" class="checkbox" id="producto2" name="productos" value="Producto 2">
+        <img src="imagenes/554.jpg" alt="Producto 2">
+      </div>
+      <div class="item">
+        <input type="checkbox" class="checkbox" id="producto3" name="productos" value="Producto 3">
+        <img src="imagenes/547.jpg" alt="Producto 3">
+      </div>
+      <div class="item">
+        <input type="checkbox" class="checkbox" id="producto4" name="productos" value="Producto 4">
+        <img src="imagenes/548.jpg" alt="Producto 4">
+      </div>
+    </div>
+    <div class="carousel-buttons">
+      <button id="prev">Anterior</button>
+      <button id="next">Siguiente</button>
+    </div>
+  </div>
 
   <!-- Carrito de Compras -->
   <div class="container mt-5">
@@ -106,8 +138,33 @@
     </div>
   </div>
 
-  <!-- jQuery -->
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  
-  <!-- Popper.js (necesario para Bootstrap) -->
-  <script src="https://cdn.jsdelivr.net
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $(".owl-carousel").owlCarousel({
+        items: 4, // Número de imágenes visibles
+        margin: 10,
+        loop: true,
+        nav: true,
+        navText: ["Anterior", "Siguiente"]
+      });
+
+      const prevButton = document.getElementById('prev');
+      const nextButton = document.getElementById('next');
+      
+      prevButton.addEventListener('click', () => {
+        $(".owl-carousel").trigger('prev.owl.carousel');
+      });
+      
+      nextButton.addEventListener('click', () => {
+        $(".owl-carousel").trigger('next.owl.carousel');
+      });
+    });
+  </script>
+</body>
+</html>
