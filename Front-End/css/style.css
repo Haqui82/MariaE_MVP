@@ -878,10 +878,49 @@ a:focus {
 .order_button {
   width: 80%;  
 }
-
-
-
 /* end order section*/
+
+/*---sell.html---*/
+/* Centralización de estilos */
+.carousel-container {  
+  text-align: center;    
+}
+
+.item img {
+  width: 100%;
+  height: 350px;
+}
+
+.checkbox {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  z-index: 2;
+}
+
+.carousel-buttons button {
+  background-color: var(--primary-color, #007BFF);
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.carousel-buttons button:hover {
+  background-color: var(--hover-color, #0056b3);
+}
+
+.text-right h4 {
+  margin-right: 10px;
+}
+
+.disabled-style {
+  opacity: 0.5; /* Hace el botón más opaco */
+  cursor: not-allowed; /* Cambia el cursor para indicar que está inhabilitado */
+}
+
+/*---End of sell.html---*/
 
 /* footer section*/
 .footer_section {
