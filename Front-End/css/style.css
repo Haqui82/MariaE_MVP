@@ -840,7 +840,7 @@ a:focus {
 
 /* end info section */
 
-/* botones de las fotos  seccion inicio*/
+/* botones de las fotos index.html*/
 
 .btn-container {
   display: flex;
@@ -872,7 +872,60 @@ a:focus {
   pointer-events: auto;
   background-color: green;
 }
-/* Fin de botones de las fotos seccion inicio*/
+/* Fin de botones de las fotos index.html*/
+
+/* Ventana emergente de cada una de las fotos en index.html*/
+.modal {
+  display: none; /* Oculta la ventana por defecto */
+  position: fixed;
+  z-index: 1050;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Fondo blanco */
+  border: 2px solid #ccc; /* Borde gris claro */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px;
+  max-width: 60%; /* Ajusta el ancho máximo */
+  max-height: 80%; /* Ajusta la altura máxima */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); /* Sombra para enmarcar la ventana */
+  overflow: hidden; /* Evita desbordamientos */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end; /* Botón de cierre a la derecha */
+}
+
+.modal-content {
+  width: 50%;          /* Permite que el ancho de la imagen sea dinámico */
+  height: auto;         /* Asegura que la altura de la imagen se adapte a su proporción */
+  max-width: 100%;      /* Limita la imagen al ancho máximo del contenedor */
+  max-height: 100%;     /* Evita que la imagen exceda la altura del modal */
+  object-fit: contain;  /* Ajusta la imagen para que se ajuste al espacio disponible sin recortarse */
+  margin-top: -30px; /* Mueve la imagen 30px hacia arriba */
+}
+
+.modal-body {
+  display: flex;
+  gap: 0px; /* Espacio entre imágenes */
+}
+
+#modal-guide {
+  margin-top: -30px; /* Mueve la imagen 30px hacia arriba */
+}
+
+.close {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+/* Fin de ventana emergente de cada una de las fotos en index.html*/
 
 /* order  section*/
 .order_button {

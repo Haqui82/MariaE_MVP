@@ -222,7 +222,7 @@
           </div>
         </div>
   
-        <!-- Agrega aquí los otros productos con estructura similar -->         
+        <!-- Agrega aquí los otros productos con estructura similar -->          
         
         <div class="col-sm-6 col-md-4 col-lg-3 product-box">
           <div class="box">
@@ -379,10 +379,13 @@
   </div>
   </section>
   <!-- Ventana emergente -->
-  <div id="image-modal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modal-image">
+<div id="image-modal" class="modal">
+  <span class="close">&times;</span>
+  <div class="modal-body d-flex justify-content-between">
+    <img class="modal-content img-fluid" id="modal-image">
+    <img class="modal-content img-fluid" id="modal-guide" src="imagenes/guiaDeTallas3.png">
   </div>
+</div>
   <!-- end shop section -->
 
   <!-- saving section -->
@@ -968,20 +971,20 @@
     const modal = document.getElementById('image-modal');
     const modalImage = document.getElementById('modal-image');
     const closeButton = document.querySelector('.close');
-
-    // Abre el modal con la imagen correspondiente
+  
+    // Agregar evento de clic a las imágenes
     openModalButtons.forEach(button => {
-    button.addEventListener('click', event => {
-    event.preventDefault(); // Evita el comportamiento predeterminado del enlace
-    const imageSrc = button.getAttribute('data-image');
-    modalImage.src = imageSrc; // Asigna la imagen al modal
-    modal.style.display = 'block';
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const imagePath = button.getAttribute('data-image');
+        modalImage.src = imagePath;
+        modal.style.display = "block";
       });
     });
-
-    // Cierra el modal cuando se hace clic en el botón de cierre
+  
+    // Cerrar el modal cuando se haga clic en el botón de cierre
     closeButton.addEventListener('click', () => {
-      modal.style.display = 'none';
+      modal.style.display = "none";
     });
   </script>
 </body>
