@@ -206,7 +206,7 @@
         <!-- Producto 1 -->
         <div class="col-sm-6 col-md-4 col-lg-3 product-box">
           <div class="box">
-            <a href="#" class="open-modal" data-image="imagenes/535.jpg">
+            <a href="#" class="open-modal" data-image="imagenes/535.jpg" data-mode="1">
               <div class="img-box">
                 <img src="imagenes/535.jpg" alt="high quality jeans">
               </div>
@@ -226,12 +226,11 @@
         
         <div class="col-sm-6 col-md-4 col-lg-3 product-box">
           <div class="box">
-            <a href="#">
+            <a href="#" class="open-modal" data-image="imagenes/554.jpg" data-mode="1">
               <div class="img-box">
                 <img src="imagenes/554.jpg" alt="high quality jeans">
               </div>
               <div class="detail-box">
-                <!-- Aquí irá la casilla de verificación -->
                 <div class="checkbox-placeholder"></div>
                 <div>Heart</div>
                 <h6>Precio <span>$70.000 COP</span></h6>
@@ -245,7 +244,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3 product-box">
           <div class="box">
-            <a href="#">
+            <a href="#" class="open-modal" data-image="imagenes/547.jpg" data-mode="2">
               <div class="img-box">
                 <img src="imagenes/547.jpg" alt="high quality jeans">
               </div>
@@ -378,7 +377,8 @@
         
   </div>
   </section>
-  <!-- Ventana emergente -->
+
+  <!-- Ventana emergente modo 1 -->
 <div id="image-modal" class="modal">
   <span class="close">&times;</span>
   <div class="modal-body d-flex justify-content-between">
@@ -386,6 +386,15 @@
     <img class="modal-content img-fluid" id="modal-guide" src="imagenes/guiaDeTallas3.png">
   </div>
 </div>
+  <!-- Fin de ventana emergente modo 1 -->
+
+  <!-- Ventana emergente modo 2-->
+<div id="image-modal2" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modal-image2">
+</div>
+  <!-- Fin de ventana emergente modo 2--> 
+  
   <!-- end shop section -->
 
   <!-- saving section -->
@@ -966,26 +975,36 @@
   <script src="js/custom.js"></script>
   <script src="../js/scripts.js"></script>
   <script>
-    // Seleccionar los elementos de las imágenes y el modal
+    // Seleccionar los elementos de las imágenes
     const openModalButtons = document.querySelectorAll('.open-modal');
-    const modal = document.getElementById('image-modal');
-    const modalImage = document.getElementById('modal-image');
-    const closeButton = document.querySelector('.close');
   
-    // Agregar evento de clic a las imágenes
     openModalButtons.forEach(button => {
       button.addEventListener('click', (event) => {
         event.preventDefault();
+        
         const imagePath = button.getAttribute('data-image');
-        modalImage.src = imagePath;
-        modal.style.display = "block";
+        const mode = button.getAttribute('data-mode');
+  
+        if (mode === "1") {
+          // Mostrar ventana emergente modo 1
+          document.getElementById('modal-image').src = imagePath;
+          document.getElementById('image-modal').style.display = "block";
+        } else {
+          // Mostrar ventana emergente modo 2
+          document.getElementById('modal-image2').src = imagePath;
+          document.getElementById('image-modal2').style.display = "block";
+        }
       });
     });
   
-    // Cerrar el modal cuando se haga clic en el botón de cierre
-    closeButton.addEventListener('click', () => {
-      modal.style.display = "none";
+    // Cerrar los modales cuando se haga clic en el botón de cierre
+    document.querySelectorAll('.close').forEach(closeButton => {
+      closeButton.addEventListener('click', () => {
+        document.getElementById('image-modal').style.display = "none";
+        document.getElementById('image-modal2').style.display = "none";
+      });
     });
   </script>
+
 </body>
 </html>
