@@ -356,7 +356,7 @@ a:focus {
 
 .shop_section .box .img-box img {
   max-width: 100%;
-  max-height: 145px;
+  max-height: 300px;
 }
 
 .shop_section .box .detail-box {
@@ -892,6 +892,23 @@ a:focus {
   overflow: hidden; /* Evita desbordamientos */
 }
 
+.modal2 {
+  display: none; /* Oculta la ventana por defecto */
+  position: fixed;
+  z-index: 1050;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Fondo blanco */
+  border: 2px solid #ccc; /* Borde gris claro */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 15px;
+  max-width: 60%; /* Ajusta el ancho máximo */
+  max-height: 80%; /* Ajusta la altura máxima */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); /* Sombra para enmarcar la ventana */
+  overflow: hidden; /* Evita desbordamientos */
+}
+
 .modal-header {
   display: flex;
   justify-content: flex-end; /* Botón de cierre a la derecha */
@@ -904,6 +921,18 @@ a:focus {
   max-height: 100%;     /* Evita que la imagen exceda la altura del modal */
   object-fit: contain;  /* Ajusta la imagen para que se ajuste al espacio disponible sin recortarse */
   margin-top: -30px; /* Mueve la imagen 30px hacia arriba */
+  margin-right: 0%;
+}
+
+.modal-content2 {
+  display: block;
+  width: 80%; /* Ajusta el ancho de la imagen al contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+  position: relative;
+  margin: 0; /* Elimina márgenes innecesarios */
+  top: -175px; /* Ajusta este valor para mover la imagen hacia arriba */
+  left: 100px;
 }
 
 .modal-body {
