@@ -840,6 +840,20 @@ a:focus {
 
 /* end info section */
 
+/* Las etiquetas de las fotos en index.html*/
+.checkbox-placeholder {
+margin-top: -27px;
+}
+
+.reference_tag {
+  margin-left: 30px;
+}
+
+.cost_tag {
+  margin-right: 30px;  
+}
+/* Fin de las etiquetas de las fotos en index.html*/
+
 /* botones de las fotos index.html*/
 
 .btn-container {
