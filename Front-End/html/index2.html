@@ -403,13 +403,12 @@
   <!-- Ventana emergente modo 2-->
   <div id="image-modal2" class="modal2">
   <span class="close">&times;</span>
-  <div style="position: relative; top: 50px;">
-    <button class="nav-button" onclick="showPreviousImage('modal-image2')">&lt;</button>
+  <div>
+    <button  class="nav-button"  onclick="showPreviousImage('modal-image2')">&lt;</button>
     <img class="modal-content2" id="modal-image2">
-    <button class="nav-button2" onclick="showNextImage('modal-image2')">&gt;</button>
+    <button class="nav-button" onclick="showNextImage('modal-image2')" style="position: relative; top: -896px; left:25px;">&gt;</button>
   </div>
-</div>
-  
+</div>  
   <!-- Fin de ventana emergente modo 2--> 
   
   <!-- end shop section -->
@@ -1052,9 +1051,6 @@
         modal2.style.display = "none";
       }
     });
-  </script>
-  
-  
-  
+  </script>  
 </body>
 </html>

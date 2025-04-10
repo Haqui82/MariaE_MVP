@@ -389,20 +389,26 @@
   </section>
 
   <!-- Ventana emergente modo 1 -->
-<div id="image-modal" class="modal">
-  <span class="close">&times;</span>
-  <div class="modal-body d-flex justify-content-between">
-    <img class="modal-content img-fluid" id="modal-image">
-    <img class="modal-content img-fluid" id="modal-guide" src="imagenes/guiaDeTallas3.png">
-  </div>
-</div>
+  <div id="image-modal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-body d-flex justify-content-between" style="position: relative; top: 50px;">
+      <button class="nav-button" onclick="showPreviousImage('modal-image')">&lt;</button>
+      <img class="modal-content img-fluid" id="modal-image">
+      <button class="nav-button" onclick="showNextImage('modal-image')">&gt;</button>
+      <img class="modal-content img-fluid" id="modal-guide" src="imagenes/guiaDeTallas3.png">
+    </div>
+  </div> 
   <!-- Fin de ventana emergente modo 1 -->
 
   <!-- Ventana emergente modo 2-->
-<div id="image-modal2" class="modal2">
+  <div id="image-modal2" class="modal2">
   <span class="close">&times;</span>
-  <img class="modal-content2" id="modal-image2">
-</div>
+  <div>
+    <button  class="nav-button"  onclick="showPreviousImage('modal-image2')">&lt;</button>
+    <img class="modal-content2" id="modal-image2">
+    <button class="nav-button" onclick="showNextImage('modal-image2')" style="position: relative; top: -896px; left:25px;">&gt;</button>
+  </div>
+</div>  
   <!-- Fin de ventana emergente modo 2--> 
   
   <!-- end shop section -->
@@ -985,17 +991,20 @@
   <script src="js/custom.js"></script>
   <script src="../js/scripts.js"></script>
   <script>
-    // Seleccionar los elementos de las imágenes
+    // Seleccionar los elementos de las imágenes y guardar las rutas de las imágenes
     const openModalButtons = document.querySelectorAll('.open-modal');
-    
+    const galleryImages = Array.from(document.querySelectorAll('#gallery .img-box img')).map(img => img.src);
+    let currentIndex = 0;
+  
     openModalButtons.forEach(button => {
       button.addEventListener('click', (event) => {
         event.preventDefault();
-        event.stopPropagation(); // Evitar propagación del evento al documento
-        
+        event.stopPropagation(); // Evitar conflictos con otros eventos
+  
         const imagePath = button.getAttribute('data-image');
         const mode = button.getAttribute('data-mode');
-    
+        currentIndex = galleryImages.indexOf(imagePath);
+  
         if (mode === "1") {
           // Mostrar ventana emergente modo 1
           document.getElementById('modal-image').src = imagePath;
@@ -1007,30 +1016,41 @@
         }
       });
     });
-    
-    // Cerrar los modales cuando se haga clic en el botón de cierre
+  
+    // Funciones para navegar entre imágenes
+    function showNextImage(imageId) {
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      document.getElementById(imageId).src = galleryImages[currentIndex];
+    }
+  
+    function showPreviousImage(imageId) {
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      document.getElementById(imageId).src = galleryImages[currentIndex];
+    }
+  
+    // Cerrar los modales al hacer clic en el botón de cierre
     document.querySelectorAll('.close').forEach(closeButton => {
       closeButton.addEventListener('click', (event) => {
-        event.stopPropagation(); // Evitar propagación del evento al documento
+        event.stopPropagation(); // Evitar conflictos con otros eventos
         document.getElementById('image-modal').style.display = "none";
         document.getElementById('image-modal2').style.display = "none";
       });
     });
-
+  
     // Cerrar los modales al hacer clic fuera de ellos
     document.addEventListener('click', (event) => {
       const modal1 = document.getElementById('image-modal');
       const modal2 = document.getElementById('image-modal2');
       
       // Verificar si algún modal está abierto y cerrar si el clic ocurre fuera
-      if (modal1.style.display === "block" && !modal1.contains(event.target)) {
+      if (modal1.style.display === "block" && !modal1.contains(event.target) && event.target !== modal1) {
         modal1.style.display = "none";
       }
       
-      if (modal2.style.display === "block" && !modal2.contains(event.target)) {
+      if (modal2.style.display === "block" && !modal2.contains(event.target) && event.target !== modal2) {
         modal2.style.display = "none";
       }
     });
-</script>
+  </script>  
 </body>
 </html>
