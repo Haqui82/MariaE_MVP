@@ -968,16 +968,55 @@ margin-top: -27px;
   outline: none;
 }
 
+.modal2_content {
+ display: flex;
+ justify-content: flex-start;  
+}
+
+.modal2-content_img {
+  width: 100%;
+  height: auto;
+  margin-top: -150px;
+  margin-left: 10px;
+}
+
 .nav-button {
   background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: blue;
   border: none;
   font-size: 20px;
   cursor: pointer;  
   z-index: 10;
 }
 
+.nav-button1 {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: blue;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;  
+  z-index: 10;
+  margin-top: -20px;
+}
+
+.nav-button2 {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: blue;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;  
+  z-index: 10;
+  margin-bottom: -1700px; 
+  margin-right: 35px;     
+}
+
+
+
 .nav-button:hover {
+  background-color: rgba(197, 15, 15, 0.8);
+}
+
+.nav-button2:hover {
   background-color: rgba(197, 15, 15, 0.8);
 }
 /* Fin de ventana emergente de cada una de las fotos en index.html*/
