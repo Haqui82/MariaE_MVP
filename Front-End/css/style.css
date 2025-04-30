@@ -400,6 +400,7 @@ a:focus {
       -ms-flex-pack: center;
           justify-content: center;
   margin-top: 45px;
+  margin-left: 200px;
 }
 
 .shop_section .btn-box a {
@@ -1010,8 +1011,6 @@ margin-top: -27px;
   margin-right: 35px;     
 }
 
-
-
 .nav-button:hover {
   background-color: rgba(197, 15, 15, 0.8);
 }
@@ -1019,13 +1018,9 @@ margin-top: -27px;
 .nav-button2:hover {
   background-color: rgba(197, 15, 15, 0.8);
 }
-/* Fin de ventana emergente de cada una de las fotos en index.html*/
+/* Fin de ventana emergente de las fotos en index.html*/
 
-/* order  section*/
-.order_button {
-  width: 80%;  
-}
-/* end order section*/
+
 
 /*---sell.html---*/
 /* Centralización de estilos */
@@ -1035,7 +1030,7 @@ margin-top: -27px;
 
 .item img {
   width: 100%;
-  height: 350px;
+  height: auto;
 }
 
 .checkbox {
@@ -1066,6 +1061,12 @@ margin-top: -27px;
   opacity: 0.5; /* Hace el botón más opaco */
   cursor: not-allowed; /* Cambia el cursor para indicar que está inhabilitado */
 }
+
+/*---sell.html - order section---*/
+.order_section {
+  margin-bottom: 100px;
+}
+/*---End of sell.html - order section---*/
 
 /*---End of sell.html---*/
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Basic -->
+  <!-- Metadatos básicos -->
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <!-- Mobile Metas -->
@@ -11,20 +11,22 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
   <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
-
+  
   <title>Maria E. girls Fashion Confecciones.</title>
 
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Custom styles for this template -->
-  <link href="../css/style.css" rel="stylesheet"/>
-  <!-- responsive style -->
-  <link href="../css/responsive.css" rel="stylesheet" />
-</head>
-<body>
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
+  <!-- Hoja de estilos personalizada -->
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+
+<body>
   <!-- header section starts -->
   <header class="header_section">
     <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -61,7 +63,7 @@
             <i class="fa fa-user" aria-hidden="true"></i>
             <span>Ingresar</span>
           </a>
-          <a href="sell2.html">
+          <a href="sell3.html">
             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
           </a>
           <form class="form-inline">
@@ -75,52 +77,48 @@
   </header>
   <!-- end header section -->
 
-  <!-- las imágenes van aquí -->
-  <h2 class="text-center">Qué vas a llevar hoy?</h2>
-  <div class="carousel-container">
-    <div class="carousel">
-      <div class="row">
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto1" name="productos" value="Producto 1">
-          <img src="imagenes/535.jpg" alt="Producto 1">
-        </div>
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto2" name="productos" value="Producto 2">
-          <img src="imagenes/554.jpg" alt="Producto 2">
-        </div>
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto3" name="productos" value="Producto 3">
-          <img src="imagenes/547.jpg" alt="Producto 3">
-        </div>
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto4" name="productos" value="Producto 4">
-          <img src="imagenes/548.jpg" alt="Producto 4">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto5" name="productos" value="Producto 5">
-          <img src="imagenes/540.jpg" alt="Producto 5">
-        </div>
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto6" name="productos" value="Producto 6">
-          <img src="imagenes/536.jpg" alt="Producto 6">
-        </div>
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto7" name="productos" value="Producto 7">
-          <img src="imagenes/553.jpg" alt="Producto 7">
-        </div>
-        <div class="col-md-3 item">
-          <input type="checkbox" class="checkbox ml-2" id="producto8" name="productos" value="Producto 8">
-          <img src="imagenes/789.jpg" alt="Producto 8">
-        </div>
-      </div>
+  <!-- Contenido del Carrusel -->
+<h2 class="text-center mb-1 mt-2">Qué vas a llevar hoy?</h2>   
+<div class="carousel-container">  
+  <div class="owl-carousel owl-theme">
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto1" name="productos" value="Producto 1">
+      <img src="imagenes/535.jpg" alt="Producto 1">
     </div>
-    <div class="carousel-buttons">
-      <button id="prev">Anterior</button>
-      <button id="next">Siguiente</button>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto2" name="productos" value="Producto 2">
+      <img src="imagenes/554.jpg" alt="Producto 2">
+    </div>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto3" name="productos" value="Producto 3">
+      <img src="imagenes/547.jpg" alt="Producto 3">
+    </div>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto4" name="productos" value="Producto 4">
+      <img src="imagenes/548.jpg" alt="Producto 4">
+    </div>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto5" name="productos" value="Producto 5">
+      <img src="imagenes/540.jpg" alt="Producto 5">
+    </div>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto6" name="productos" value="Producto 6">
+      <img src="imagenes/536.jpg" alt="Producto 6">
+    </div>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto7" name="productos" value="Producto 7">
+      <img src="imagenes/553.jpg" alt="Producto 7">
+    </div>
+    <div class="item">
+      <input type="checkbox" class="checkbox" id="producto8" name="productos" value="Producto 8">
+      <img src="imagenes/789.jpg" alt="Producto 8">
     </div>
   </div>
+  <div class="carousel-buttons">
+    <button id="prev">Anterior</button>
+    <button id="next">Siguiente</button>
+  </div>
+</div>
 
   <!-- Carrito de Compras -->
   <div class="container mt-2">    
@@ -146,58 +144,57 @@
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script>
-    const carousel = document.querySelector('.carousel');
-    const prevButton = document.getElementById('prev');
-    const nextButton = document.getElementById('next');
-    let currentGroup = 0;
-    const groups = document.querySelectorAll('.carousel > .row');
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-    function updateVisibility() {
-      groups.forEach((group, index) => {
-        group.style.display = index === currentGroup ? 'flex' : 'none';
-      });
+  <script>
+    $(document).ready(function(){
+  const carousel = $(".owl-carousel");
+  const prevButton = $("#prev");
+  const nextButton = $("#next");
+
+  // Inicializa el carrusel Owl Carousel
+  carousel.owlCarousel({
+    items: 4, // Número de imágenes visibles
+    margin: 10,
+    loop: false, // Se desactiva el bucle para controlar los botones "Anterior" y "Siguiente"
+    nav: false // Control manual de navegación con los botones externos
+  });
+
+  function updateButtons() {
+    const currentIndex = carousel.find('.owl-stage').position().left; // Posición actual del carrusel
+    const maxIndex = carousel.find('.owl-stage').width() - carousel.width(); // Última posición del carrusel
+
+    // Validar el botón "Anterior"
+    if (currentIndex >= 0) {
+      prevButton.prop("disabled", true).addClass("disabled-style");
+    } else {
+      prevButton.prop("disabled", false).removeClass("disabled-style");
     }
 
-    function updateButtons() {
-  // Estado visual y lógico para el botón "Anterior"
-  if (currentGroup === 0) {
-    prevButton.disabled = true;
-    prevButton.classList.add('disabled-style');
-  } else {
-    prevButton.disabled = false;
-    prevButton.classList.remove('disabled-style');
+    // Validar el botón "Siguiente"
+    if (currentIndex <= -maxIndex) {
+      nextButton.prop("disabled", true).addClass("disabled-style");
+    } else {
+      nextButton.prop("disabled", false).removeClass("disabled-style");
+    }
   }
 
-  // Estado visual y lógico para el botón "Siguiente"
-  if (currentGroup === groups.length - 1) {
-    nextButton.disabled = true;
-    nextButton.classList.add('disabled-style');
-  } else {
-    nextButton.disabled = false;
-    nextButton.classList.remove('disabled-style');
-  }
-}
+  // Eventos para los botones
+  prevButton.click(() => {
+    carousel.trigger('prev.owl.carousel');
+    updateButtons(); // Actualizar estado de los botones
+  });
 
-    prevButton.addEventListener('click', () => {
-      if (currentGroup > 0) {
-        currentGroup--;
-        updateVisibility();
-        updateButtons();
-      }
-    });
+  nextButton.click(() => {
+    carousel.trigger('next.owl.carousel');
+    updateButtons(); // Actualizar estado de los botones
+  });
 
-    nextButton.addEventListener('click', () => {
-      if (currentGroup < groups.length - 1) {
-        currentGroup++;
-        updateVisibility();
-        updateButtons();
-      }
-    });
-
-    // Inicializa
-    updateVisibility();
-    updateButtons();
+  // Inicializa botones al cargar la página
+  updateButtons();
+  });    
   </script>
 </body>
 </html>
