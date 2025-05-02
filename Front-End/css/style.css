@@ -1025,7 +1025,9 @@ margin-top: -27px;
 /*---sell.html---*/
 /* Centralización de estilos */
 .carousel-container {  
-  text-align: center;    
+  text-align: center;
+  width: 97%;  
+   margin-left: 1.5%; 
 }
 
 .item img {
