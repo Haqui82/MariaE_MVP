@@ -530,5 +530,13 @@
     }
 
   </script>
+  <script>
+  // Recuperar los IDs seleccionados de sessionStorage y mostrarlos en consola
+  document.addEventListener('DOMContentLoaded', function () {
+    const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+    console.log("Checkbox IDs seleccionados en sell.html:", selectedIds);
+    // Aquí puedes usar selectedIds como necesites
+  });
+  </script>
 </body>
 </html>

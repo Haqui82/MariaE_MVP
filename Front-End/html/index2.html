@@ -380,7 +380,7 @@
           
           <!-- Botón comprar ahora --> 
            <div class="btn-box" id="btn_comprar">
-            <a href="sell.html" id="buyNowBtn" class="disabled">
+            <a href="sell2.html" id="buyNowBtn" class="disabled">
                Comprar Ahora
             </a>
           </div>
@@ -561,6 +561,8 @@
                 </g>
                 <g>
                 </g>
+                <g>
+                </g>
               </svg>
             </div>
             <div class="detail-box">
@@ -646,6 +648,12 @@
                     <path d="M373.333,234.667H352c-5.888,0-10.667,4.779-10.667,10.667S346.112,256,352,256h21.333
                  c5.888,0,10.667-4.779,10.667-10.667S379.221,234.667,373.333,234.667z" />
                   </g>
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+                <g>
                 </g>
                 <g>
                 </g>
@@ -986,11 +994,11 @@
   <!-- end info section -->
 
 
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  <script src="../https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
-  <script src="js/custom.js"></script>
+  <script src="../js/custom.js"></script>
   
   <!--Scripts for the modal windows-->
   <script>
@@ -1091,6 +1099,8 @@
       document.querySelectorAll('.productCheckbox:checked').forEach(checkedBox => {
         selectedIds.push(checkedBox.id);
       });
+      // Guardar los IDs seleccionados en sessionStorage
+      sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
       // Mostrar en consola los IDs seleccionados
       console.log("Checkbox IDs seleccionados:", selectedIds);
 
