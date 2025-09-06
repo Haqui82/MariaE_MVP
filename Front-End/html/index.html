@@ -275,7 +275,7 @@
                 <img src="imagenes/540.jpg" alt="high quality jeans">
               </div>
               <div class="detail-box">
-                <div  class="mt-2 reference_tag">short</div>
+                <div  class="mt-2 reference_tag">Short</div>
                 <h6 class="mt-2 cost_tag"><span>$50.000 COP</span></h6>                
               </div>
               <div class="new">
@@ -380,7 +380,7 @@
           
           <!-- Botón comprar ahora --> 
            <div class="btn-box" id="btn_comprar">
-            <a href="sell.html" id="buyNowBtn" class="disabled">
+            <a href="sell2.html" id="buyNowBtn" class="disabled">
                Comprar Ahora
             </a>
           </div>
@@ -561,6 +561,8 @@
                 </g>
                 <g>
                 </g>
+                <g>
+                </g>
               </svg>
             </div>
             <div class="detail-box">
@@ -646,6 +648,12 @@
                     <path d="M373.333,234.667H352c-5.888,0-10.667,4.779-10.667,10.667S346.112,256,352,256h21.333
                  c5.888,0,10.667-4.779,10.667-10.667S379.221,234.667,373.333,234.667z" />
                   </g>
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+                <g>
                 </g>
                 <g>
                 </g>
@@ -986,12 +994,13 @@
   <!-- end info section -->
 
 
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  <script src="../https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
-  <script src="js/custom.js"></script>
-  <script src="../js/scripts.js"></script>
+  <script src="../js/custom.js"></script>
+  
+  <!--Scripts for the modal windows-->
   <script>
     // Seleccionar los elementos de las imágenes y guardar las rutas de las imágenes
     const openModalButtons = document.querySelectorAll('.open-modal');
@@ -1053,6 +1062,58 @@
         modal2.style.display = "none";
       }
     });
-  </script>  
+  </script> 
+  <!--End of Scripts for the modal windows-->
+  <!---------------------------------------------------------->
+  <!---------------------------------------------------------->
+  <!--Scripts for the check-boxes-->
+<script>
+  // Array global para almacenar los IDs seleccionados
+  const selectedIds = [];
+
+  function insertCheckboxes() {
+    document.querySelectorAll('.checkbox-placeholder').forEach((placeholder) => {
+      // Buscar la referencia del producto (texto dentro de .reference_tag)
+      const productBox = placeholder.closest('.product-box');
+      const referenceTag = productBox.querySelector('.reference_tag');
+      let reference = referenceTag ? referenceTag.textContent.trim().replace(/\s+/g, '_') : 'unknown';
+      // Generar el id usando la referencia
+      const checkboxId = `${reference}`;
+      // Crear el checkbox con el id generado
+      const label = document.createElement('label');
+      label.innerHTML = `<input type="checkbox" class="productCheckbox" id="${checkboxId}">`;
+      placeholder.appendChild(label);
+    });
+  }
+
+  // Llamada a la función para insertar casillas de verificación
+  insertCheckboxes();
+
+  // Lógica para habilitar/deshabilitar el botón "Comprar Ahora" y almacenar los IDs seleccionados
+  document.querySelectorAll('.productCheckbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      const buyNowBtn = document.getElementById('buyNowBtn');
+      // Limpiar el array antes de llenarlo de nuevo
+      selectedIds.length = 0;
+      // Buscar todos los checkboxes seleccionados y guardar sus IDs
+      document.querySelectorAll('.productCheckbox:checked').forEach(checkedBox => {
+        selectedIds.push(checkedBox.id);
+      });
+      // Guardar los IDs seleccionados en sessionStorage
+      sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+      // Mostrar en consola los IDs seleccionados
+      console.log("Checkbox IDs seleccionados:", selectedIds);
+
+      if (selectedIds.length > 0) {
+        buyNowBtn.classList.remove('disabled');
+        buyNowBtn.classList.add('enabled');
+      } else {
+        buyNowBtn.classList.remove('enabled');
+        buyNowBtn.classList.add('disabled');
+      }
+    });
+  });
+</script>
+  <!--End of Scripts for the check-boxes-->
 </body>
 </html>

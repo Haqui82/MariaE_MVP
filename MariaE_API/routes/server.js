@@ -4,7 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 require('dotenv').config(); // Cargar variables de entorno desde .env
-const config = require('./config/config'); // Importa la configuración centralizada
+const config = require('../config/config'); // Importa la configuración centralizada
 
 const app = express();
 const port = config.server_port || 10000; // Usar SERVER_PORT o 10000 por defecto
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, '..', 'Front-End')));
 
 // Importar y usar las rutas de post.js con el prefijo /api
-const postRoutes = require('./routes/post');
+const postRoutes = require('./post.js');
 app.use('/api', postRoutes);
 
 // Ruta para servir el archivo index.html desde su nueva ubicación

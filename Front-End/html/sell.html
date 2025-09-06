@@ -81,37 +81,37 @@
 <h2 class="text-center mb-1 mt-2">Qué vas a llevar hoy?</h2>   
 <div class="carousel-container">  
   <div class="owl-carousel owl-theme">
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto1" name="productos" value="Producto 1">
+    <div class="item" id="Flower">
+      <input type="checkbox" class="checkbox" id="Flower" name="productos" value="Producto 1">
       <img src="imagenes/535.jpg" alt="Producto 1">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto2" name="productos" value="Producto 2">
+    <div class="item" id="Heart">
+      <input type="checkbox" class="checkbox" id="Heart" name="productos" value="Producto 2">
       <img src="imagenes/554.jpg" alt="Producto 2">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto3" name="productos" value="Producto 3">
+    <div class="item" id="Skirt">
+      <input type="checkbox" class="checkbox" id="Skirt" name="productos" value="Producto 3">
       <img src="imagenes/547.jpg" alt="Producto 3">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto4" name="productos" value="Producto 4">
+    <div class="item" id="Short">
+      <input type="checkbox" class="checkbox" id="Short" name="productos" value="Producto 4">
       <img src="imagenes/548.jpg" alt="Producto 4">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto5" name="productos" value="Producto 5">
+    <div class="item" id="Teddy">
+      <input type="checkbox" class="checkbox" id="Teddy" name="productos" value="Producto 5">
       <img src="imagenes/540.jpg" alt="Producto 5">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto6" name="productos" value="Producto 6">
+    <div class="item" id="Blacky">
+      <input type="checkbox" class="checkbox" id="Blacky" name="productos" value="Producto 6">
       <img src="imagenes/536.jpg" alt="Producto 6">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto7" name="productos" value="Producto 7">
+    <div class="item" id="Pretty">
+      <input type="checkbox" class="checkbox" id="Pretty" name="productos" value="Producto 7">
       <img src="imagenes/553.jpg" alt="Producto 7">
     </div>
-    <div class="item">
-      <input type="checkbox" class="checkbox" id="producto8" name="productos" value="Producto 8">
-      <img src="imagenes/789.jpg" alt="Producto 8">
+    <div class="item" id="Beautty">
+      <input type="checkbox" class="checkbox" id="Beautty" name="productos" value="Producto 8">
+      <img src="imagenes/789.jpg" alt="Producto 8"> 
     </div>
   </div>
   <div class="carousel-buttons">
@@ -119,9 +119,9 @@
     <button id="next">Siguiente</button>
   </div>
 </div>
+<!-- Fin del Contenido del Carrusel -->
 
-  <!-- Carrito de Compras -->
-  
+  <!-- Inicio del Carrito de Compras -->
 
 <!-------------------------------------------------->
 <!-- order section -->
@@ -292,6 +292,36 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+<script>
+  // Recuperar los IDs seleccionados de sessionStorage y mostrarlos en consola
+  document.addEventListener('DOMContentLoaded', function () {
+    // 1. Recuperar los IDs seleccionados
+    const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+    console.log("Checkbox IDs seleccionados en sell.html:", selectedIds);
+
+    // 2. Marcar los checkboxes correspondientes en el carrusel
+    const carouselCheckboxes = document.querySelectorAll('.owl-carousel .checkbox');
+    carouselCheckboxes.forEach(function(checkbox) {
+      if (selectedIds.includes(checkbox.id)) {
+        checkbox.checked = true;
+      }
+    });
+
+    // 3. Obtener las referencias seleccionadas (por el id del checkbox)
+    //    y guardarlas en window.selectedReferences para usarlas en agregarFila
+    window.selectedReferences = selectedIds.slice(); // copia del array
+
+    // 4. Llamar a agregarFila tantas veces como referencias seleccionadas haya
+    if (window.selectedReferences.length > 0) {
+      for (let i = 0; i < window.selectedReferences.length; i++) {
+        agregarFila(); // cada llamada usará la referencia correspondiente        
+      }
+    } 
+  });
+</script>
+<!-- Fin del Script para seleccion automatica de checkboxes y filas del carrito -->
+
+  
   <!-- Script of image's gallery -->
   <script>
     $(document).ready(function(){
@@ -335,6 +365,9 @@
   updateButtons();
   });    
   </script>
+  <!-- Fin del Script de la galería de imágenes -->
+
+  
 
   <!-----Script of Buy Order Form ------------------------>
   <script>
@@ -390,7 +423,10 @@
         "Heart": 70000,
         "Skirt": 60000,
         "Short": 50000,
-        // Agrega más productos según sea necesario
+        "Blacky": 70000,
+        "Pretty": 70000,
+        "Beauty": 70000,
+                // Agrega más productos según sea necesario
       };
       return productos[referencia] || 0;
     }
@@ -422,10 +458,10 @@
       calcularTotalTotal(contador);
     }
 
-    function agregarFila() {
+    function agregarFila(event) {
       // Evita que el botón provoque un salto
-      if (event) event.preventDefault(); 
-      //---------------
+      if (event) event.preventDefault();
+
       // Selecciona la tabla donde se agregarán las filas
       const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
 
@@ -433,12 +469,18 @@
       const nuevaFila = document.createElement("tr");
       nuevaFila.id = `fila-${contador}`;
 
+      // Obtener la referencia para esta fila si existe en window.selectedReferences
+      let referenciaValue = "";
+      if (window.selectedReferences && contador <= window.selectedReferences.length) {
+        referenciaValue = window.selectedReferences[contador - 1] || "";
+      }
+
       // Define el contenido de la fila
       nuevaFila.innerHTML = `
         <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
         <td>      
           <div style="position: relative;">
-            <input type="text" id="referencia-${contador}"/>
+            <input type="text" id="referencia-${contador}" value="${referenciaValue}"/>
             <button onclick="mostrarOpciones(${contador}, event)" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
             <div id="opcionesReferencia-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto;">
               <div style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -458,17 +500,31 @@
                   <strong>Short</strong>
                   <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
                 </div>
+                <div>
+                  <strong>Teddy</strong>
+                  <img src="imagenes/540.jpg" alt="Teddy" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Blacky</strong>
+                  <img src="imagenes/536.jpg" alt="Blacky" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Pretty</strong>
+                  <img src="imagenes/553.jpg" alt="Pretty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Beautty</strong>
+                  <img src="imagenes/789.jpg" alt="Beautty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
               </div>
             </div>
           </div>
         </td>
-        
-        
         <td>
           <style>
             #tallas-${contador} {
-              max-width: 60px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
-              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+              max-width: 60px;
+              box-sizing: border-box;
             }
           </style>        
           <div style="position: relative;">
@@ -486,12 +542,11 @@
               </div>
           </div>
         </td>
-        
         <td>
           <style>
             #cantidad-${contador} {
-              max-width: 80px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
-              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+              max-width: 80px;
+              box-sizing: border-box;
             }
           </style>
           <input type="text" id="cantidad-${contador}" oninput="validarCantidad(this, ${contador})" />
@@ -499,8 +554,8 @@
         <td>
           <style>
             #valorUnidad-${contador} {
-              max-width: 110px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
-              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+              max-width: 110px;
+              box-sizing: border-box;
             }
           </style>
           <input type="text" id="valorUnidad-${contador}" />
@@ -508,8 +563,8 @@
         <td>
           <style>
             #valorTotal-${contador} {
-              max-width: 110px; /* Máximo tamaño en píxeles, para evitar que sea muy grande en pantallas grandes */
-              box-sizing: border-box; /* Asegura que los bordes y el padding estén incluidos en el ancho */ 
+              max-width: 110px;
+              box-sizing: border-box;
             }
           </style>
           <input type="text" id="valorTotal-${contador}" /></td>
@@ -530,5 +585,6 @@
     }
 
   </script>
+  
 </body>
 </html>
