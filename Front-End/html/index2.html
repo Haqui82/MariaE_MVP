@@ -275,7 +275,7 @@
                 <img src="imagenes/540.jpg" alt="high quality jeans">
               </div>
               <div class="detail-box">
-                <div  class="mt-2 reference_tag">short</div>
+                <div  class="mt-2 reference_tag">Short</div>
                 <h6 class="mt-2 cost_tag"><span>$50.000 COP</span></h6>                
               </div>
               <div class="new">
@@ -1078,7 +1078,7 @@
       const referenceTag = productBox.querySelector('.reference_tag');
       let reference = referenceTag ? referenceTag.textContent.trim().replace(/\s+/g, '_') : 'unknown';
       // Generar el id usando la referencia
-      const checkboxId = `productCheckbox_${reference}`;
+      const checkboxId = `${reference}`;
       // Crear el checkbox con el id generado
       const label = document.createElement('label');
       label.innerHTML = `<input type="checkbox" class="productCheckbox" id="${checkboxId}">`;

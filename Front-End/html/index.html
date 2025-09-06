@@ -275,7 +275,7 @@
                 <img src="imagenes/540.jpg" alt="high quality jeans">
               </div>
               <div class="detail-box">
-                <div  class="mt-2 reference_tag">short</div>
+                <div  class="mt-2 reference_tag">Short</div>
                 <h6 class="mt-2 cost_tag"><span>$50.000 COP</span></h6>                
               </div>
               <div class="new">
@@ -380,7 +380,7 @@
           
           <!-- Botón comprar ahora --> 
            <div class="btn-box" id="btn_comprar">
-            <a href="sell.html" id="buyNowBtn" class="disabled">
+            <a href="sell2.html" id="buyNowBtn" class="disabled">
                Comprar Ahora
             </a>
           </div>
@@ -408,7 +408,7 @@
     <div>
       <img class="modal2-content_img" id="modal-image2">
     </div>
-    <button class="nav-button" onclick="showNextImage('modal-image2')" style="position: relative; top: -896px; left:25px;">&gt;</button>    
+    <button class="nav-button2" onclick="showNextImage('modal-image2')" style="position: relative; top: -896px; left:25px;">&gt;</button>    
   </div> 
 </div>  
 <!-- Fin de ventana emergente modo 2--> 
@@ -563,10 +563,6 @@
                 </g>
                 <g>
                 </g>
-                <g>
-                </g>
-                <g>
-                </g>
               </svg>
             </div>
             <div class="detail-box">
@@ -652,8 +648,6 @@
                     <path d="M373.333,234.667H352c-5.888,0-10.667,4.779-10.667,10.667S346.112,256,352,256h21.333
                  c5.888,0,10.667-4.779,10.667-10.667S379.221,234.667,373.333,234.667z" />
                   </g>
-                </g>
-                <g>
                 </g>
                 <g>
                 </g>
@@ -1084,7 +1078,7 @@
       const referenceTag = productBox.querySelector('.reference_tag');
       let reference = referenceTag ? referenceTag.textContent.trim().replace(/\s+/g, '_') : 'unknown';
       // Generar el id usando la referencia
-      const checkboxId = `productCheckbox_${reference}`;
+      const checkboxId = `${reference}`;
       // Crear el checkbox con el id generado
       const label = document.createElement('label');
       label.innerHTML = `<input type="checkbox" class="productCheckbox" id="${checkboxId}">`;
@@ -1110,7 +1104,6 @@
       // Mostrar en consola los IDs seleccionados
       console.log("Checkbox IDs seleccionados:", selectedIds);
 
-      // Habilitar o deshabilitar el botón según selección
       if (selectedIds.length > 0) {
         buyNowBtn.classList.remove('disabled');
         buyNowBtn.classList.add('enabled');
@@ -1119,13 +1112,6 @@
         buyNowBtn.classList.add('disabled');
       }
     });
-  });
-
-  // Prevenir navegación si el botón está deshabilitado
-  document.getElementById('buyNowBtn').addEventListener('click', function (e) {
-    if (this.classList.contains('disabled')) {
-      e.preventDefault();
-    }
   });
 </script>
   <!--End of Scripts for the check-boxes-->
