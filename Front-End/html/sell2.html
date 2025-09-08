@@ -292,39 +292,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<script>
-  // Recuperar los IDs seleccionados de sessionStorage y mostrarlos en consola
-  document.addEventListener('DOMContentLoaded', function () {
-    // 1. Recuperar los IDs seleccionados
-    const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
-    console.log("Checkbox IDs seleccionados en sell.html:", selectedIds);
-
-    // 2. Marcar los checkboxes correspondientes en el carrusel
-    const carouselCheckboxes = document.querySelectorAll('.owl-carousel .checkbox');
-    carouselCheckboxes.forEach(function(checkbox) {
-      if (selectedIds.includes(checkbox.id)) {
-        checkbox.checked = true;
-      }
-    });
-
-    // 3. Obtener las referencias seleccionadas (por el id del checkbox)
-    //    y guardarlas en window.selectedReferences para usarlas en agregarFila
-    window.selectedReferences = selectedIds.slice(); // copia del array
-
-    // 4. Llamar a agregarFila tantas veces como referencias seleccionadas haya
-    if (window.selectedReferences.length > 0) {
-      for (let i = 0; i < window.selectedReferences.length; i++) {
-        agregarFila(); // cada llamada usará la referencia correspondiente        
-      }
-    } 
-  });
-</script>
-<!-- Fin del Script para seleccion automatica de checkboxes y filas del carrito -->
-
-  
-  <!-- Script of image's gallery -->
+  <!-- 1. Script of image's gallery -->
   <script>
     $(document).ready(function(){
+  // Selecciona los elementos del DOM
   const carousel = $(".owl-carousel");
   const prevButton = $("#prev");
   const nextButton = $("#next");
@@ -368,16 +339,136 @@
   <!-- Fin del Script de la galería de imágenes -->
 
   
-
-  <!-----Script of Buy Order Form ------------------------>
+  <!-----2. Script of Buy Order Form ------------------------>
   <script>
-    // Contador para asignar IDs únicos
+    //2.1. Contador para asignar IDs únicos
     let contador = 1;
-    // Agrega automáticamente la primera fila al cargar la página
+    //--------------------------------------------------
+    //2.2.Función para agregar una nueva fila a la tabla
+    function agregarFila(event) {
+      //2.2.1. Evita que el botón provoque un salto
+      if (event) event.preventDefault();
+
+      //2.2.2. Selecciona la tabla donde se agregarán las filas
+      const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+      //2.2.3. Crea una nueva fila
+      const nuevaFila = document.createElement("tr");
+      nuevaFila.id = `fila-${contador}`;
+
+      // 2.2.4. Obtener la referencia para esta fila si existe en window.selectedReferences
+      let referenciaValue = "";
+      if (window.selectedReferences && contador <= window.selectedReferences.length) {
+        referenciaValue = window.selectedReferences[contador - 1] || "";
+      }
+
+      //2.2.5. Define el contenido de la fila
+      nuevaFila.innerHTML = `
+        <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
+        <td>      
+          <div style="position: relative;">
+            <input type="text" id="referencia-${contador}" value="${referenciaValue}"/>
+            <button onclick="mostrarOpciones(${contador}, event)" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
+            <div id="opcionesReferencia-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto; z-index: 9999;">
+              <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <div>
+                  <strong>Flower</strong>
+                  <img src="imagenes/535.jpg" alt="Flower" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Heart</strong>
+                  <img src="imagenes/554.jpg" alt="Heart" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Skirt</strong>
+                  <img src="imagenes/547.jpg" alt="Skirt" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Short</strong>
+                  <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Teddy</strong>
+                  <img src="imagenes/540.jpg" alt="Teddy" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Blacky</strong>
+                  <img src="imagenes/536.jpg" alt="Blacky" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Pretty</strong>
+                  <img src="imagenes/553.jpg" alt="Pretty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+                <div>
+                  <strong>Beautty</strong>
+                  <img src="imagenes/789.jpg" alt="Beautty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <style>
+            #tallas-${contador} {
+              max-width: 60px;
+              box-sizing: border-box;
+            }
+          </style>        
+          <div style="position: relative;">
+            <input type="text" class="input_talla" id="tallas-${contador}"/>
+            <button onclick="mostrarTallas(${contador}, event)" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
+            <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto; z-index: 9999;">
+              <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <div onclick="seleccionarTalla(this, ${contador})">4</div>
+                <div onclick="seleccionarTalla(this, ${contador})">6</div>
+                <div onclick="seleccionarTalla(this, ${contador})">8</div>
+                <div onclick="seleccionarTalla(this, ${contador})">10</div>
+                <div onclick="seleccionarTalla(this, ${contador})">12</div>
+                <div onclick="seleccionarTalla(this, ${contador})">16</div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <style>
+            #cantidad-${contador} {
+              max-width: 80px;
+              box-sizing: border-box;
+            }
+          </style>
+          <input type="text" id="cantidad-${contador}" oninput="validarCantidad(this, ${contador})" />
+        </td>
+        <td>
+          <style>
+            #valorUnidad-${contador} {
+              max-width: 110px;
+              box-sizing: border-box;
+            }
+          </style>
+          <input type="text" id="valorUnidad-${contador}" value="${obtenerPrecio(referenciaValue)}" />
+        </td>
+        <td>
+          <style>
+            #valorTotal-${contador} {
+              max-width: 110px;
+              box-sizing: border-box;
+            }
+          </style>
+          <input type="text" id="valorTotal-${contador}" />
+        </td>
+      `;
+
+      // Agrega la fila a la tabla
+      tabla.appendChild(nuevaFila);
+
+      // Incrementa el contador para los próximos IDs
+      contador++;
+    }   
+    //------------------------------------------------------------
+    //3. Agrega automáticamente la primera fila al cargar la página
     window.onload = function() {
         agregarFila();
     };
-
+    //4. Funciones Usadas:------------------------------------------------------------   
     // Función para mostrar las opciones de referencias
     function mostrarOpciones(idFila) {
       // Evita que el botón provoque un salto
@@ -431,10 +522,14 @@
       return productos[referencia] || 0;
     }
 
-    function actualizarPrecio(idFila) {
+    function actualizarPrecio(idFila) {      
+      // Obtiene la referencia seleccionada en la fila actual
       const referencia = document.getElementById(`referencia-${idFila}`).value;
+      // Obtiene el precio basado en la referencia     
       const precio = obtenerPrecio(referencia);
+      // Actualiza el campo valorUnidad con el precio obtenido
       document.getElementById(`valorUnidad-${idFila}`).value = precio;
+      // Recalcula el total para la fila actual
       calcularTotal(idFila);
     }
 
@@ -456,126 +551,7 @@
       const valorTotal = cantidad * valorUnidad;
       document.getElementById(`valorTotal-${idFila}`).value = valorTotal;
       calcularTotalTotal(contador);
-    }
-
-    function agregarFila(event) {
-      // Evita que el botón provoque un salto
-      if (event) event.preventDefault();
-
-      // Selecciona la tabla donde se agregarán las filas
-      const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-
-      // Crea una nueva fila
-      const nuevaFila = document.createElement("tr");
-      nuevaFila.id = `fila-${contador}`;
-
-      // Obtener la referencia para esta fila si existe en window.selectedReferences
-      let referenciaValue = "";
-      if (window.selectedReferences && contador <= window.selectedReferences.length) {
-        referenciaValue = window.selectedReferences[contador - 1] || "";
-      }
-
-      // Define el contenido de la fila
-      nuevaFila.innerHTML = `
-        <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
-        <td>      
-          <div style="position: relative;">
-            <input type="text" id="referencia-${contador}" value="${referenciaValue}"/>
-            <button onclick="mostrarOpciones(${contador}, event)" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-            <div id="opcionesReferencia-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto;">
-              <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                <div>
-                  <strong>Flower</strong>
-                  <img src="imagenes/535.jpg" alt="Flower" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Heart</strong>
-                  <img src="imagenes/554.jpg" alt="Heart" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Skirt</strong>
-                  <img src="imagenes/547.jpg" alt="Skirt" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Short</strong>
-                  <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Teddy</strong>
-                  <img src="imagenes/540.jpg" alt="Teddy" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Blacky</strong>
-                  <img src="imagenes/536.jpg" alt="Blacky" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Pretty</strong>
-                  <img src="imagenes/553.jpg" alt="Pretty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Beautty</strong>
-                  <img src="imagenes/789.jpg" alt="Beautty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <style>
-            #tallas-${contador} {
-              max-width: 60px;
-              box-sizing: border-box;
-            }
-          </style>        
-          <div style="position: relative;">
-              <input type="text" class="input_talla" id="tallas-${contador}"/>
-              <button onclick="mostrarTallas(${contador}, event)" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-              <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto;">
-                  <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                      <div onclick="seleccionarTalla(this, ${contador})">4</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">6</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">8</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">10</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">12</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">16</div>
-                  </div>
-              </div>
-          </div>
-        </td>
-        <td>
-          <style>
-            #cantidad-${contador} {
-              max-width: 80px;
-              box-sizing: border-box;
-            }
-          </style>
-          <input type="text" id="cantidad-${contador}" oninput="validarCantidad(this, ${contador})" />
-        </td>
-        <td>
-          <style>
-            #valorUnidad-${contador} {
-              max-width: 110px;
-              box-sizing: border-box;
-            }
-          </style>
-          <input type="text" id="valorUnidad-${contador}" />
-        </td>
-        <td>
-          <style>
-            #valorTotal-${contador} {
-              max-width: 110px;
-              box-sizing: border-box;
-            }
-          </style>
-          <input type="text" id="valorTotal-${contador}" /></td>
-      `;
-
-      // Agrega la fila a la tabla
-      tabla.appendChild(nuevaFila);
-
-      // Incrementa el contador para los próximos IDs
-      contador++;
-    }    
+    }     
 
     function pagar(event) {  
       //FUNCION PENDIENTE POR REALIZAR    
@@ -585,6 +561,37 @@
     }
 
   </script>
+  <!---------------------Fin del Script de la orden de compra ------------------------>
+
+  <!-- 3. Script para seleccion automatica de checkboxes y generar filas del carrito -->  
+<script>
+  // Recuperar los IDs seleccionados de sessionStorage y mostrarlos en consola
+  document.addEventListener('DOMContentLoaded', function () {
+    // 1. Recuperar los IDs seleccionados
+    const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+    console.log("Checkbox IDs seleccionados en sell.html:", selectedIds);
+
+    // 2. Marcar los checkboxes correspondientes en el carrusel
+    const carouselCheckboxes = document.querySelectorAll('.owl-carousel .checkbox');
+    carouselCheckboxes.forEach(function(checkbox) {
+      if (selectedIds.includes(checkbox.id)) {
+        checkbox.checked = true;
+      }
+    });
+
+    // 3. Obtener las referencias seleccionadas (por el id del checkbox)
+    //    y guardarlas en window.selectedReferences para usarlas en agregarFila
+    window.selectedReferences = selectedIds.slice(); // copia del array
+
+    // 4. Llamar a agregarFila tantas veces como referencias seleccionadas haya
+    if (window.selectedReferences.length > 0) {
+      for (let i = 0; i < window.selectedReferences.length; i++) {
+        agregarFila(); // cada llamada usará la referencia correspondiente        
+      }
+    } 
+  });
+</script>
+<!-- Fin del Script para seleccion automatica de checkboxes y filas del carrito -->
   
 </body>
 </html>
