@@ -355,20 +355,20 @@
       const nuevaFila = document.createElement("tr");
       nuevaFila.id = `fila-${contador}`;
 
-      // 2.4. Obtener la referencia para esta fila si existe en window.selectedReferences
+      // 2.2.4. Obtener la referencia para esta fila si existe en window.selectedReferences
       let referenciaValue = "";
       if (window.selectedReferences && contador <= window.selectedReferences.length) {
         referenciaValue = window.selectedReferences[contador - 1] || "";
       }
 
-      // Define el contenido de la fila
+      //2.2.5. Define el contenido de la fila
       nuevaFila.innerHTML = `
         <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
         <td>      
           <div style="position: relative;">
             <input type="text" id="referencia-${contador}" value="${referenciaValue}"/>
             <button onclick="mostrarOpciones(${contador}, event)" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-            <div id="opcionesReferencia-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto;">
+            <div id="opcionesReferencia-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto; z-index: 9999;">
               <div style="display: flex; flex-direction: column; align-items: flex-start;">
                 <div>
                   <strong>Flower</strong>
@@ -414,18 +414,18 @@
             }
           </style>        
           <div style="position: relative;">
-              <input type="text" class="input_talla" id="tallas-${contador}"/>
-              <button onclick="mostrarTallas(${contador}, event)" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-              <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto;">
-                  <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                      <div onclick="seleccionarTalla(this, ${contador})">4</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">6</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">8</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">10</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">12</div>
-                      <div onclick="seleccionarTalla(this, ${contador})">16</div>
-                  </div>
+            <input type="text" class="input_talla" id="tallas-${contador}"/>
+            <button onclick="mostrarTallas(${contador}, event)" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
+            <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto; z-index: 9999;">
+              <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <div onclick="seleccionarTalla(this, ${contador})">4</div>
+                <div onclick="seleccionarTalla(this, ${contador})">6</div>
+                <div onclick="seleccionarTalla(this, ${contador})">8</div>
+                <div onclick="seleccionarTalla(this, ${contador})">10</div>
+                <div onclick="seleccionarTalla(this, ${contador})">12</div>
+                <div onclick="seleccionarTalla(this, ${contador})">16</div>
               </div>
+            </div>
           </div>
         </td>
         <td>
@@ -453,7 +453,8 @@
               box-sizing: border-box;
             }
           </style>
-          <input type="text" id="valorTotal-${contador}" /></td>
+          <input type="text" id="valorTotal-${contador}" />
+        </td>
       `;
 
       // Agrega la fila a la tabla
