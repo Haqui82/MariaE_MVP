@@ -346,22 +346,17 @@
     //--------------------------------------------------
     //2.2.Función para agregar una nueva fila a la tabla
     function agregarFila(event) {
-      //2.2.1. Evita que el botón provoque un salto
       if (event) event.preventDefault();
 
-      //2.2.2. Selecciona la tabla donde se agregarán las filas
       const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-      //2.2.3. Crea una nueva fila
       const nuevaFila = document.createElement("tr");
       nuevaFila.id = `fila-${contador}`;
 
-      // 2.2.4. Obtener la referencia para esta fila si existe en window.selectedReferences
       let referenciaValue = "";
       if (window.selectedReferences && contador <= window.selectedReferences.length) {
         referenciaValue = window.selectedReferences[contador - 1] || "";
       }
 
-      //2.2.5. Define el contenido de la fila
       nuevaFila.innerHTML = `
         <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
         <td>      
@@ -455,12 +450,14 @@
           </style>
           <input type="text" id="valorTotal-${contador}" />
         </td>
+        <td>
+          <button class="btn-trash" onclick="borrarFila(this, '${referenciaValue}')" style="background: none; border: none;">
+            <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
+          </button>
+        </td>
       `;
 
-      // Agrega la fila a la tabla
       tabla.appendChild(nuevaFila);
-
-      // Incrementa el contador para los próximos IDs
       contador++;
     }   
     //------------------------------------------------------------
@@ -631,15 +628,12 @@ document.addEventListener('DOMContentLoaded', function () {
 // Usa el mismo contador global que el resto del sistema
 // Evita duplicados y sigue la estructura y métodos de agregarFila
 function agregarFilaDinamica(referenciaValue) {
-  // Evita duplicados
   if (document.querySelector(`input[id^="referencia-"][value="${referenciaValue}"]`)) return;
 
-  // Usa el contador global
   const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
   const nuevaFila = document.createElement("tr");
   nuevaFila.id = `fila-${contador}`;
 
-  // Define el contenido de la fila igual que agregarFila
   nuevaFila.innerHTML = `
     <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
     <td>      
@@ -733,6 +727,11 @@ function agregarFilaDinamica(referenciaValue) {
       </style>
       <input type="text" id="valorTotal-${contador}" />
     </td>
+    <td>
+      <button class="btn-trash" onclick="borrarFila(this, '${referenciaValue}')" style="background: none; border: none;">
+        <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
+      </button>
+    </td>
   `;
 
   tabla.appendChild(nuevaFila);
@@ -748,6 +747,26 @@ function eliminarFilaPorReferencia(referencia) {
       tabla.removeChild(fila);
     }
   });
+}
+
+// Nueva función para borrar fila y desmarcar checkbox si corresponde
+function borrarFila(btn, referenciaValue) {
+  // Elimina la fila
+  const fila = btn.closest('tr');
+  if (fila) fila.remove();
+
+  // Verifica si queda alguna fila con esa referencia
+  const filasConReferencia = document.querySelectorAll(`input[id^="referencia-"][value="${referenciaValue}"]`);
+  if (filasConReferencia.length === 0) {
+    // Desmarca el checkbox correspondiente en el carrusel
+    const checkbox = document.getElementById(referenciaValue);
+    if (checkbox) checkbox.checked = false;
+
+    // Actualiza sessionStorage si se usa
+    let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+    selectedIds = selectedIds.filter(id => id !== referenciaValue);
+    sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+  }
 }
 </script>
 <!-- Fin del Script para seleccion/aparición dinamica de checkboxes y filas del carrito -->  
