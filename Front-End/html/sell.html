@@ -346,22 +346,17 @@
     //--------------------------------------------------
     //2.2.Función para agregar una nueva fila a la tabla
     function agregarFila(event) {
-      //2.2.1. Evita que el botón provoque un salto
       if (event) event.preventDefault();
 
-      //2.2.2. Selecciona la tabla donde se agregarán las filas
       const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-      //2.2.3. Crea una nueva fila
       const nuevaFila = document.createElement("tr");
       nuevaFila.id = `fila-${contador}`;
 
-      // 2.2.4. Obtener la referencia para esta fila si existe en window.selectedReferences
       let referenciaValue = "";
       if (window.selectedReferences && contador <= window.selectedReferences.length) {
         referenciaValue = window.selectedReferences[contador - 1] || "";
       }
 
-      //2.2.5. Define el contenido de la fila
       nuevaFila.innerHTML = `
         <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
         <td>      
@@ -384,23 +379,23 @@
                 </div>
                 <div>
                   <strong>Short</strong>
-                  <img src="imagenes/540.jpg" alt="Short" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                  <img src="imagenes/540.jpg" alt="Short" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
                 </div>
                 <div>
                   <strong>Teddy</strong>
-                  <img src="imagenes/540.jpg" alt="Teddy" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                  <img src="imagenes/540.jpg" alt="Teddy" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
                 </div>
                 <div>
                   <strong>Blacky</strong>
-                  <img src="imagenes/536.jpg" alt="Blacky" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                  <img src="imagenes/536.jpg" alt="Blacky" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
                 </div>
                 <div>
                   <strong>Pretty</strong>
-                  <img src="imagenes/553.jpg" alt="Pretty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                  <img src="imagenes/553.jpg" alt="Pretty" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
                 </div>
                 <div>
                   <strong>Beautty</strong>
-                  <img src="imagenes/789.jpg" alt="Beautty" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
+                  <img src="imagenes/789.jpg" alt="Beautty" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
                 </div>
               </div>
             </div>
@@ -455,21 +450,23 @@
           </style>
           <input type="text" id="valorTotal-${contador}" />
         </td>
+        <td>
+          <button class="btn-trash" onclick="borrarFila(this, '${referenciaValue}')" style="background: none; border: none;">
+            <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
+          </button>
+        </td>
       `;
 
-      // Agrega la fila a la tabla
       tabla.appendChild(nuevaFila);
-
-      // Incrementa el contador para los próximos IDs
       contador++;
     }   
     //------------------------------------------------------------
-    //3. Agrega automáticamente la primera fila al cargar la página
-    window.onload = function() {
+    //2.3. Agrega automáticamente la primera fila al cargar la página
+   /* window.onload = function() {
         agregarFila();
-    };
-    //4. Funciones Usadas:------------------------------------------------------------   
-    // Función para mostrar las opciones de referencias
+    };*/
+    //2.4. Funciones Usadas:------------------------------------------------------------   
+    //2.4.1. Función para mostrar las opciones de referencias
     function mostrarOpciones(idFila) {
       // Evita que el botón provoque un salto
       if (event) event.preventDefault();
@@ -478,7 +475,7 @@
       opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
     }
 
-    // Función para elegir una de las opciones de referencias
+    //2.4.2. Función para elegir una de las opciones de referencias
     function seleccionarOpcion(img, idFila) {
       const referencia = document.getElementById(`referencia-${idFila}`);
       referencia.value = img.alt;
@@ -486,7 +483,7 @@
       actualizarPrecio(idFila);
     }
 
-    // Función para mostrar las opciones de tallas
+    //2.4.3. Función para mostrar las opciones de tallas
     function mostrarTallas(idFila) {
         // Evita que el botón provoque un salto
         if (event) event.preventDefault();
@@ -495,19 +492,19 @@
         opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
     }
 
-    // Función para seleccionar una talla
+    //2.4.4. Función para seleccionar una talla
     function seleccionarTalla(div, idFila) {
         const talla = div.textContent; // Obtén el texto dentro del div
         const inputTalla = document.getElementById(`tallas-${idFila}`);
         inputTalla.value = talla;
         document.getElementById(`opcionesTallas-${idFila}`).style.display = 'none'; // Oculta las opciones
     }
-
+    //2.4.5. Función para validar que la cantidad sea numérica y calcular el total
     function validarCantidad(input, idFila) {
       input.value = input.value.replace(/[^0-9]/g, '');
       calcularTotal(idFila);
     }
-
+    //2.4.6. Función para obtener el precio según la referencia
     function obtenerPrecio(referencia) {
       const productos = {
         "Flower": 70000,
@@ -523,6 +520,7 @@
       return productos[referencia] || 0;
     }
 
+    //2.4.7. Función para actualizar el precio unitario y recalcular el total
     function actualizarPrecio(idFila) {      
       // Obtiene la referencia seleccionada en la fila actual
       const referencia = document.getElementById(`referencia-${idFila}`).value;
@@ -533,7 +531,21 @@
       // Recalcula el total para la fila actual
       calcularTotal(idFila);
     }
+    
+    //2.4.8. Función para borrar una fila
+    function calcularTotalTotal(contador) {
+      let sumaTotal = 0;
+      for (let i = 1; i <= contador; i++) {
+        const valorTotal = document.getElementById(`valorTotal-${i}`);
+        if (valorTotal) { // Verifica que el elemento exista
+          sumaTotal += parseInt(valorTotal.value) || 0;
+        }
+      }
+      // Actualiza el campo total_input con el resultado
+      document.getElementById("total_input").value = sumaTotal;
+    }  
 
+    //2.4.8. Función para borrar una fila
     function calcularTotalTotal(contador) {
       let sumaTotal = 0;
       for (let i = 1; i <= contador; i++) {
@@ -546,14 +558,16 @@
       document.getElementById("total_input").value = sumaTotal;
     }
 
+    //2.4.9. Función para calcular el total de una fila y actualizar el total general
     function calcularTotal(idFila) {
       const cantidad = parseInt(document.getElementById(`cantidad-${idFila}`).value) || 0;
       const valorUnidad = parseInt(document.getElementById(`valorUnidad-${idFila}`).value) || 0;
       const valorTotal = cantidad * valorUnidad;
       document.getElementById(`valorTotal-${idFila}`).value = valorTotal;
       calcularTotalTotal(contador);
-    }     
-
+    } 
+    
+    //2.4.10. Función pagar (pendiente por realizar)
     function pagar(event) {  
       //FUNCION PENDIENTE POR REALIZAR    
       // Evita que el botón provoque un salto
@@ -587,7 +601,7 @@
     // 3.4. Llamar a agregarFila tantas veces como referencias seleccionadas haya
     if (window.selectedReferences.length > 0) {
       for (let i = 0; i < window.selectedReferences.length; i++) {
-        agregarFila(); // cada llamada usará la referencia correspondiente        
+        agregarFilaDinamica(window.selectedReferences[i]); // cada llamada usará la referencia correspondiente        
       }
     } 
   });
@@ -631,15 +645,12 @@ document.addEventListener('DOMContentLoaded', function () {
 // Usa el mismo contador global que el resto del sistema
 // Evita duplicados y sigue la estructura y métodos de agregarFila
 function agregarFilaDinamica(referenciaValue) {
-  // Evita duplicados
   if (document.querySelector(`input[id^="referencia-"][value="${referenciaValue}"]`)) return;
 
-  // Usa el contador global
   const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
   const nuevaFila = document.createElement("tr");
   nuevaFila.id = `fila-${contador}`;
 
-  // Define el contenido de la fila igual que agregarFila
   nuevaFila.innerHTML = `
     <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
     <td>      
@@ -733,6 +744,11 @@ function agregarFilaDinamica(referenciaValue) {
       </style>
       <input type="text" id="valorTotal-${contador}" />
     </td>
+    <td>
+      <button class="btn-trash" onclick="borrarFila(this, '${referenciaValue}')" style="background: none; border: none;">
+        <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
+      </button>
+    </td>
   `;
 
   tabla.appendChild(nuevaFila);
@@ -742,12 +758,53 @@ function agregarFilaDinamica(referenciaValue) {
 // Función para eliminar la fila por referencia
 function eliminarFilaPorReferencia(referencia) {
   const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+  let filasEliminadas = 0;
   Array.from(tabla.children).forEach(fila => {
     const refInput = fila.querySelector('input[id^="referencia-"]');
     if (refInput && refInput.value === referencia) {
       tabla.removeChild(fila);
+      filasEliminadas++;
     }
   });
+
+  // Espera al siguiente ciclo de renderizado para asegurar que las filas fueron eliminadas
+  setTimeout(function() {
+    // Si no quedan filas con esa referencia, desmarcar el checkbox y actualizar sessionStorage
+    const filasConReferencia = document.querySelectorAll(`input[id^="referencia-"][value="${referencia}"]`);
+    if (filasConReferencia.length === 0) {
+      const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referencia}"]`);
+      if (checkbox) {
+        checkbox.checked = false;
+        let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+        selectedIds = selectedIds.filter(id => id !== referencia);
+        sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+      }
+    }
+  }, 0);
+}
+
+// Sincronizada: función para borrar fila y desmarcar checkbox solo si es la última fila con esa referencia
+function borrarFila(btn, referenciaValue) {
+  // Elimina la fila
+  const fila = btn.closest('tr');
+  if (fila) fila.remove();
+
+  // Espera al siguiente ciclo de renderizado para asegurar que la fila fue eliminada
+  setTimeout(function() {
+    // Verifica si queda alguna fila con esa referencia después de borrar
+    const filasConReferencia = document.querySelectorAll(`input[id^="referencia-"][value="${referenciaValue}"]`);
+    if (filasConReferencia.length === 0) {
+      // Solo si no quedan filas con esa referencia, desmarca el checkbox
+      const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referenciaValue}"]`);
+      if (checkbox) {
+        checkbox.checked = false;
+        // Actualiza sessionStorage y sincroniza con el script dinámico
+        let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+        selectedIds = selectedIds.filter(id => id !== referenciaValue);
+        sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+      }
+    }
+  }, 0);
 }
 </script>
 <!-- Fin del Script para seleccion/aparición dinamica de checkboxes y filas del carrito -->  
