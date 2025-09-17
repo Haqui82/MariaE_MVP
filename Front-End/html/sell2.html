@@ -359,8 +359,19 @@
     function seleccionarOpcion(img, idFila) {
       const referencia = document.getElementById(`referencia-${idFila}`);
       referencia.value = img.alt;
-      document.getElementById(`opcionesReferencia-${idFila}`).style.display = 'none'; // Oculta las opciones
+      document.getElementById(`opcionesReferencia-${idFila}`).style.display = 'none';
       actualizarPrecio(idFila);
+
+      // Synchronize checkbox and sessionStorage
+      const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${img.alt}"]`);
+      if (checkbox && !checkbox.checked) {
+        checkbox.checked = true;
+        let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+        if (!selectedIds.includes(img.alt)) {
+          selectedIds.push(img.alt);
+          sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+        }
+      }
     }
 
     //2.2.3. Función para mostrar las opciones de tallas
@@ -406,7 +417,7 @@
       const referencia = document.getElementById(`referencia-${idFila}`).value;
       // Obtiene el precio basado en la referencia     
       const precio = obtenerPrecio(referencia);
-      // Actualiza el campo valorUnidad con el precio obtenido
+      // Actualiza el campo valorUnidad with el precio obtenido
       document.getElementById(`valorUnidad-${idFila}`).value = precio;
       // Recalcula el total para la fila actual
       calcularTotal(idFila);
@@ -523,7 +534,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Usa el mismo contador global que el resto del sistema
-// Evita duplicados y sigue la estructura y métodos de agregarFila
 function agregarFilaDinamica(referenciaValue = "") {
   // Si referenciaValue está vacío, puedes mostrar un popup para seleccionar referencia, o dejar el campo vacío
   if (referenciaValue && document.querySelector(`input[id^="referencia-"][value="${referenciaValue}"]`)) return;
@@ -626,7 +636,7 @@ function agregarFilaDinamica(referenciaValue = "") {
       <input type="text" id="valorTotal-${contador}" />
     </td>
     <td>
-      <button class="btn-trash" onclick="borrarFila(this, '${referenciaValue}')" style="background: none; border: none;">
+      <button class="btn-trash" onclick="eliminarFilaPorReferenciaOUnica(this)" style="background: none; border: none;">
         <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
       </button>
     </td>
@@ -639,20 +649,17 @@ function agregarFilaDinamica(referenciaValue = "") {
 // Función para eliminar la fila por referencia
 function eliminarFilaPorReferencia(referencia) {
   const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-  let filasEliminadas = 0;
   Array.from(tabla.children).forEach(fila => {
     const refInput = fila.querySelector('input[id^="referencia-"]');
     if (refInput && refInput.value === referencia) {
       tabla.removeChild(fila);
-      filasEliminadas++;
     }
   });
 
   // Espera al siguiente ciclo de renderizado para asegurar que las filas fueron eliminadas
   setTimeout(function() {
     // Si no quedan filas con esa referencia, desmarcar el checkbox y actualizar sessionStorage
-    const filasConReferencia = document.querySelectorAll(`input[id^="referencia-"][value="${referencia}"]`);
-    if (filasConReferencia.length === 0) {
+    if (contarFilasReferencia(referencia) === 0) {
       const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referencia}"]`);
       if (checkbox) {
         checkbox.checked = false;
@@ -664,28 +671,48 @@ function eliminarFilaPorReferencia(referencia) {
   }, 0);
 }
 
-// Sincronizada: función para borrar fila y desmarcar checkbox solo si es la última fila con esa referencia
-function borrarFila(btn, referenciaValue) {
-  // Elimina la fila
-  const fila = btn.closest('tr');
-  if (fila) fila.remove();
+// Unified delete function for both cases
+function eliminarFilaPorReferenciaOUnica(btnOrReferencia) {
+  let referencia;
+  let fila = null;
 
-  // Espera al siguiente ciclo de renderizado para asegurar que la fila fue eliminada
+  // If called with a button (from the trash icon)
+  if (typeof btnOrReferencia !== 'string') {
+    fila = btnOrReferencia.closest('tr');
+    if (fila) {
+      const refInput = fila.querySelector('input[id^="referencia-"]');
+      if (refInput) referencia = refInput.value;
+      fila.remove();
+    }
+  } else {
+    // If called with a reference string (from checkbox uncheck)
+    referencia = btnOrReferencia;
+    const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+    Array.from(tabla.children).forEach(fila => {
+      const refInput = fila.querySelector('input[id^="referencia-"]');
+      if (refInput && refInput.value === referencia) {
+        tabla.removeChild(fila);
+      }
+    });
+  }
+
+  // Wait for DOM update
   setTimeout(function() {
-    // Verifica si queda alguna fila con esa referencia después de borrar
-    const filasConReferencia = document.querySelectorAll(`input[id^="referencia-"][value="${referenciaValue}"]`);
-    if (filasConReferencia.length === 0) {
-      // Solo si no quedan filas con esa referencia, desmarca el checkbox
-      const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referenciaValue}"]`);
+    if (contarFilasReferencia(referencia) === 0) {
+      const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referencia}"]`);
       if (checkbox) {
         checkbox.checked = false;
-        // Actualiza sessionStorage y sincroniza con el script dinámico
         let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
-        selectedIds = selectedIds.filter(id => id !== referenciaValue);
+        selectedIds = selectedIds.filter(id => id !== referencia);
         sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
       }
     }
   }, 0);
+}
+
+// Count rows with a given reference
+function contarFilasReferencia(referencia) {
+  return document.querySelectorAll(`input[id^="referencia-"][value="${referencia}"]`).length;
 }
 </script>
 <!-- Fin del Script para seleccion/aparición dinamica de checkboxes y filas del carrito -->  

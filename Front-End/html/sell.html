@@ -159,7 +159,7 @@
             </div>
 
             <div class="d-flex">
-              <button id="plus" onclick="agregarFila(event)">
+              <button id="plus" type="button" onclick="agregarFilaDinamica('')">
                 +
               </button>
 
@@ -341,131 +341,11 @@
   
   <!-----2. Script of Buy Order Form ------------------------>
   <script>
-    //2.1. Contador para asignar IDs únicos
+    //2.1. Contador global para asignar IDs únicos
     let contador = 1;
     //--------------------------------------------------
-    //2.2.Función para agregar una nueva fila a la tabla
-    function agregarFila(event) {
-      if (event) event.preventDefault();
-
-      const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-      const nuevaFila = document.createElement("tr");
-      nuevaFila.id = `fila-${contador}`;
-
-      let referenciaValue = "";
-      if (window.selectedReferences && contador <= window.selectedReferences.length) {
-        referenciaValue = window.selectedReferences[contador - 1] || "";
-      }
-
-      nuevaFila.innerHTML = `
-        <td id="id-fila">${(contador % 100).toString().padStart(2, '0')}</td>  
-        <td>      
-          <div style="position: relative;">
-            <input type="text" id="referencia-${contador}" value="${referenciaValue}"/>
-            <button onclick="mostrarOpciones(${contador}, event)" class="order_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-            <div id="opcionesReferencia-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 220px; overflow-y: auto; z-index: 9999;">
-              <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                <div>
-                  <strong>Flower</strong>
-                  <img src="imagenes/535.jpg" alt="Flower" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Heart</strong>
-                  <img src="imagenes/554.jpg" alt="Heart" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Skirt</strong>
-                  <img src="imagenes/547.jpg" alt="Skirt" style="width: 100px; height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Short</strong>
-                  <img src="imagenes/540.jpg" alt="Short" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Teddy</strong>
-                  <img src="imagenes/540.jpg" alt="Teddy" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Blacky</strong>
-                  <img src="imagenes/536.jpg" alt="Blacky" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Pretty</strong>
-                  <img src="imagenes/553.jpg" alt="Pretty" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-                <div>
-                  <strong>Beautty</strong>
-                  <img src="imagenes/789.jpg" alt="Beautty" style="width: 100px, height: auto;" onclick="seleccionarOpcion(this, ${contador})" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <style>
-            #tallas-${contador} {
-              max-width: 60px;
-              box-sizing: border-box;
-            }
-          </style>        
-          <div style="position: relative;">
-            <input type="text" class="input_talla" id="tallas-${contador}"/>
-            <button onclick="mostrarTallas(${contador}, event)" class="tallas_button" style="position: absolute; right: 0; top: 0;">&#9660;</button>
-            <div id="opcionesTallas-${contador}" style="display: none; position: absolute; background: white; border: 1px solid #ccc; width: 100%; height: 150px; overflow-y: auto; z-index: 9999;">
-              <div style="display: flex; flex-direction: column; align-items: flex-start;">
-                <div onclick="seleccionarTalla(this, ${contador})">4</div>
-                <div onclick="seleccionarTalla(this, ${contador})">6</div>
-                <div onclick="seleccionarTalla(this, ${contador})">8</div>
-                <div onclick="seleccionarTalla(this, ${contador})">10</div>
-                <div onclick="seleccionarTalla(this, ${contador})">12</div>
-                <div onclick="seleccionarTalla(this, ${contador})">16</div>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <style>
-            #cantidad-${contador} {
-              max-width: 80px;
-              box-sizing: border-box;
-            }
-          </style>
-          <input type="text" id="cantidad-${contador}" oninput="validarCantidad(this, ${contador})" />
-        </td>
-        <td>
-          <style>
-            #valorUnidad-${contador} {
-              max-width: 110px;
-              box-sizing: border-box;
-            }
-          </style>
-          <input type="text" id="valorUnidad-${contador}" value="${obtenerPrecio(referenciaValue)}" />
-        </td>
-        <td>
-          <style>
-            #valorTotal-${contador} {
-              max-width: 110px;
-              box-sizing: border-box;
-            }
-          </style>
-          <input type="text" id="valorTotal-${contador}" />
-        </td>
-        <td>
-          <button class="btn-trash" onclick="borrarFila(this, '${referenciaValue}')" style="background: none; border: none;">
-            <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
-          </button>
-        </td>
-      `;
-
-      tabla.appendChild(nuevaFila);
-      contador++;
-    }   
-    //------------------------------------------------------------
-    //2.3. Agrega automáticamente la primera fila al cargar la página
-   /* window.onload = function() {
-        agregarFila();
-    };*/
-    //2.4. Funciones Usadas:------------------------------------------------------------   
+    
+    //2.2. Funciones Usadas:------------------------------------------------------------   
     //2.4.1. Función para mostrar las opciones de referencias
     function mostrarOpciones(idFila) {
       // Evita que el botón provoque un salto
@@ -475,7 +355,7 @@
       opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
     }
 
-    //2.4.2. Función para elegir una de las opciones de referencias
+    //2.2.2. Función para elegir una de las opciones de referencias
     function seleccionarOpcion(img, idFila) {
       const referencia = document.getElementById(`referencia-${idFila}`);
       referencia.value = img.alt;
@@ -483,7 +363,7 @@
       actualizarPrecio(idFila);
     }
 
-    //2.4.3. Función para mostrar las opciones de tallas
+    //2.2.3. Función para mostrar las opciones de tallas
     function mostrarTallas(idFila) {
         // Evita que el botón provoque un salto
         if (event) event.preventDefault();
@@ -492,19 +372,19 @@
         opciones.style.display = opciones.style.display === 'none' ? 'block' : 'none';
     }
 
-    //2.4.4. Función para seleccionar una talla
+    //2.2.4. Función para seleccionar una talla
     function seleccionarTalla(div, idFila) {
         const talla = div.textContent; // Obtén el texto dentro del div
         const inputTalla = document.getElementById(`tallas-${idFila}`);
         inputTalla.value = talla;
         document.getElementById(`opcionesTallas-${idFila}`).style.display = 'none'; // Oculta las opciones
     }
-    //2.4.5. Función para validar que la cantidad sea numérica y calcular el total
+    //2.2.5. Función para validar que la cantidad sea numérica y calcular el total
     function validarCantidad(input, idFila) {
       input.value = input.value.replace(/[^0-9]/g, '');
       calcularTotal(idFila);
     }
-    //2.4.6. Función para obtener el precio según la referencia
+    //2.2.6. Función para obtener el precio según la referencia
     function obtenerPrecio(referencia) {
       const productos = {
         "Flower": 70000,
@@ -520,7 +400,7 @@
       return productos[referencia] || 0;
     }
 
-    //2.4.7. Función para actualizar el precio unitario y recalcular el total
+    //2.2.7. Función para actualizar el precio unitario y recalcular el total
     function actualizarPrecio(idFila) {      
       // Obtiene la referencia seleccionada en la fila actual
       const referencia = document.getElementById(`referencia-${idFila}`).value;
@@ -532,7 +412,7 @@
       calcularTotal(idFila);
     }
     
-    //2.4.8. Función para borrar una fila
+    //2.2.8. Función para borrar una fila
     function calcularTotalTotal(contador) {
       let sumaTotal = 0;
       for (let i = 1; i <= contador; i++) {
@@ -545,7 +425,7 @@
       document.getElementById("total_input").value = sumaTotal;
     }  
 
-    //2.4.8. Función para borrar una fila
+    //2.2.9. Función para borrar una fila
     function calcularTotalTotal(contador) {
       let sumaTotal = 0;
       for (let i = 1; i <= contador; i++) {
@@ -558,7 +438,7 @@
       document.getElementById("total_input").value = sumaTotal;
     }
 
-    //2.4.9. Función para calcular el total de una fila y actualizar el total general
+    //2.2.10. Función para calcular el total de una fila y actualizar el total general
     function calcularTotal(idFila) {
       const cantidad = parseInt(document.getElementById(`cantidad-${idFila}`).value) || 0;
       const valorUnidad = parseInt(document.getElementById(`valorUnidad-${idFila}`).value) || 0;
@@ -567,7 +447,7 @@
       calcularTotalTotal(contador);
     } 
     
-    //2.4.10. Función pagar (pendiente por realizar)
+    //2.2.11. Función pagar (pendiente por realizar)
     function pagar(event) {  
       //FUNCION PENDIENTE POR REALIZAR    
       // Evita que el botón provoque un salto
@@ -644,8 +524,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Usa el mismo contador global que el resto del sistema
 // Evita duplicados y sigue la estructura y métodos de agregarFila
-function agregarFilaDinamica(referenciaValue) {
-  if (document.querySelector(`input[id^="referencia-"][value="${referenciaValue}"]`)) return;
+function agregarFilaDinamica(referenciaValue = "") {
+  // Si referenciaValue está vacío, puedes mostrar un popup para seleccionar referencia, o dejar el campo vacío
+  if (referenciaValue && document.querySelector(`input[id^="referencia-"][value="${referenciaValue}"]`)) return;
 
   const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
   const nuevaFila = document.createElement("tr");
