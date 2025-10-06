@@ -372,6 +372,9 @@
           sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
         }
       }
+
+      // Mostrar estado actualizado en la consola
+      mostrarEstadoFormulario();
     }
 
     //2.2.3. Función para mostrar las opciones de tallas
@@ -522,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         selectedIds = selectedIds.filter(id => id !== checkbox.id);
         sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
-        eliminarFilaPorReferencia(checkbox.id);
+        eliminarFilaPorReferenciaOUnica(checkbox.id);
       }
     });
   });
@@ -533,9 +536,86 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Usa el mismo contador global que el resto del sistema
+// Helper: Show dynamic form status in console
+function mostrarEstadoFormulario() {
+  // 1. Get all rows
+  const filas = document.querySelectorAll('#dataTable tbody tr');
+  const numFilas = Array.from(filas).filter(fila => fila.querySelector('input[id^="referencia-"]')).length;
+
+  // 2. Get references and their counts
+  const referencias = {};
+  filas.forEach(fila => {
+    const refInput = fila.querySelector('input[id^="referencia-"]');
+    if (refInput && refInput.value) {
+      referencias[refInput.value] = (referencias[refInput.value] || 0) + 1;
+    }
+  });
+
+  // 3. Get selectedIds from sessionStorage
+  const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+
+  // 4. Show in console
+  console.clear();
+  console.log('Estado actual del formulario:');
+  console.log('selectedIds:', selectedIds);
+  console.log('Número total de filas:', numFilas);
+  console.log('Cantidad de filas por referencia:', referencias);
+}
+
+// Call mostrarEstadoFormulario after every relevant change
+document.addEventListener('DOMContentLoaded', function () {
+  // 3.1. Recuperar los IDs seleccionados
+  const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+
+  // 3.2. Marcar los checkboxes correspondientes en el carrusel
+  const carouselCheckboxes = document.querySelectorAll('.owl-carousel .checkbox');
+  carouselCheckboxes.forEach(function(checkbox) {
+    if (selectedIds.includes(checkbox.id)) {
+      checkbox.checked = true;
+    }
+  });
+
+  // 3.3. Obtener las referencias seleccionadas (por el id del checkbox)
+  window.selectedReferences = selectedIds.slice();
+
+  // 3.4. Llamar a agregarFila tantas veces como referencias seleccionadas haya
+  if (window.selectedReferences.length > 0) {
+    for (let i = 0; i < window.selectedReferences.length; i++) {
+      agregarFilaDinamica(window.selectedReferences[i]);
+    }
+  }
+  mostrarEstadoFormulario();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+
+  const carouselCheckboxes = document.querySelectorAll('.owl-carousel .checkbox');
+  carouselCheckboxes.forEach(function(checkbox) {
+    checkbox.checked = selectedIds.includes(checkbox.id);
+    checkbox.addEventListener('change', function () {
+      if (checkbox.checked) {
+        if (!selectedIds.includes(checkbox.id)) {
+          selectedIds.push(checkbox.id);
+          sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+          agregarFilaDinamica(checkbox.id);
+        }
+      } else {
+        selectedIds = selectedIds.filter(id => id !== checkbox.id);
+        sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
+        eliminarFilaPorReferenciaOUnica(checkbox.id);
+      }
+      mostrarEstadoFormulario();
+    });
+  });
+
+  selectedIds.forEach(function(ref) {
+    agregarFilaDinamica(ref);
+  });
+  mostrarEstadoFormulario();
+});
+
 function agregarFilaDinamica(referenciaValue = "") {
-  // Si referenciaValue está vacío, puedes mostrar un popup para seleccionar referencia, o dejar el campo vacío
   if (referenciaValue && document.querySelector(`input[id^="referencia-"][value="${referenciaValue}"]`)) return;
 
   const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
@@ -636,7 +716,7 @@ function agregarFilaDinamica(referenciaValue = "") {
       <input type="text" id="valorTotal-${contador}" />
     </td>
     <td>
-      <button class="btn-trash" onclick="eliminarFilaPorReferenciaOUnica(this)" style="background: none; border: none;">
+      <button class="btn-trash" onclick="eliminarFilaPorReferenciaOUnica(this); mostrarEstadoFormulario();" style="background: none; border: none;">
         <img src="imagenes/trash-can.png" alt="Borrar" style="width: 24px; height: 24px;">
       </button>
     </td>
@@ -644,31 +724,7 @@ function agregarFilaDinamica(referenciaValue = "") {
 
   tabla.appendChild(nuevaFila);
   contador++;
-}
-
-// Función para eliminar la fila por referencia
-function eliminarFilaPorReferencia(referencia) {
-  const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-  Array.from(tabla.children).forEach(fila => {
-    const refInput = fila.querySelector('input[id^="referencia-"]');
-    if (refInput && refInput.value === referencia) {
-      tabla.removeChild(fila);
-    }
-  });
-
-  // Espera al siguiente ciclo de renderizado para asegurar que las filas fueron eliminadas
-  setTimeout(function() {
-    // Si no quedan filas con esa referencia, desmarcar el checkbox y actualizar sessionStorage
-    if (contarFilasReferencia(referencia) === 0) {
-      const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referencia}"]`);
-      if (checkbox) {
-        checkbox.checked = false;
-        let selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
-        selectedIds = selectedIds.filter(id => id !== referencia);
-        sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
-      }
-    }
-  }, 0);
+  mostrarEstadoFormulario();
 }
 
 // Unified delete function for both cases
@@ -707,6 +763,7 @@ function eliminarFilaPorReferenciaOUnica(btnOrReferencia) {
         sessionStorage.setItem('selectedCheckboxIds', JSON.stringify(selectedIds));
       }
     }
+    mostrarEstadoFormulario();
   }, 0);
 }
 
