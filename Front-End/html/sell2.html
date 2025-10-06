@@ -538,11 +538,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Helper: Show dynamic form status in console
 function mostrarEstadoFormulario() {
-  // 1. Get all rows
   const filas = document.querySelectorAll('#dataTable tbody tr');
   const numFilas = Array.from(filas).filter(fila => fila.querySelector('input[id^="referencia-"]')).length;
-
-  // 2. Get references and their counts
   const referencias = {};
   filas.forEach(fila => {
     const refInput = fila.querySelector('input[id^="referencia-"]');
@@ -550,11 +547,7 @@ function mostrarEstadoFormulario() {
       referencias[refInput.value] = (referencias[refInput.value] || 0) + 1;
     }
   });
-
-  // 3. Get selectedIds from sessionStorage
   const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
-
-  // 4. Show in console
   console.clear();
   console.log('Estado actual del formulario:');
   console.log('selectedIds:', selectedIds);
@@ -731,18 +724,26 @@ function agregarFilaDinamica(referenciaValue = "") {
 function eliminarFilaPorReferenciaOUnica(btnOrReferencia) {
   let referencia;
   let fila = null;
+  let filasAntes = 0;
 
-  // If called with a button (from the trash icon)
+  // 1. Mostrar el estado actual antes de eliminar
+  mostrarEstadoFormulario();
+
   if (typeof btnOrReferencia !== 'string') {
+    // Botón de la papelera: eliminar solo esa fila
     fila = btnOrReferencia.closest('tr');
     if (fila) {
       const refInput = fila.querySelector('input[id^="referencia-"]');
-      if (refInput) referencia = refInput.value;
-      fila.remove();
+      if (refInput) {
+        referencia = refInput.value;
+        filasAntes = contarFilasReferencia(referencia);
+        fila.remove();
+      }
     }
   } else {
-    // If called with a reference string (from checkbox uncheck)
+    // Llamado por referencia (desde un checkbox): eliminar todas las filas con esa referencia
     referencia = btnOrReferencia;
+    filasAntes = contarFilasReferencia(referencia);
     const tabla = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
     Array.from(tabla.children).forEach(fila => {
       const refInput = fila.querySelector('input[id^="referencia-"]');
@@ -752,9 +753,10 @@ function eliminarFilaPorReferenciaOUnica(btnOrReferencia) {
     });
   }
 
-  // Wait for DOM update
+  // 3. Esperar al siguiente ciclo de renderizado para verificar si quedan filas
   setTimeout(function() {
-    if (contarFilasReferencia(referencia) === 0) {
+    // Solo desmarcar el checkbox si antes de eliminar había solo una fila con esa referencia
+    if (filasAntes === 1 && contarFilasReferencia(referencia) === 0) {
       const checkbox = document.querySelector(`.owl-carousel .checkbox[id="${referencia}"]`);
       if (checkbox) {
         checkbox.checked = false;
