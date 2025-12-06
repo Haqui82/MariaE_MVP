@@ -469,6 +469,65 @@
       //---------------
     }
 
+    // Function to enable/disable the "Enviar" button based on form validation
+function habilitarBotonEnviar() {
+  const filas = document.querySelectorAll('#dataTable tbody tr');
+  const numFilas = Array.from(filas).filter(fila => fila.querySelector('input[id^="referencia-"]')).length;
+  
+  let todosLosFieldsLlenos = true;
+
+  // Check if all required fields in all rows are filled
+  filas.forEach(fila => {
+    const refInput = fila.querySelector('input[id^="referencia-"]');
+    const tallaInput = fila.querySelector('input[id^="tallas-"]');
+    const cantidadInput = fila.querySelector('input[id^="cantidad-"]');
+
+    // Verify that reference, size, and quantity fields are filled
+    if (refInput && refInput.value.trim() === "") {
+      todosLosFieldsLlenos = false;
+    }
+    if (tallaInput && tallaInput.value.trim() === "") {
+      todosLosFieldsLlenos = false;
+    }
+    if (cantidadInput && cantidadInput.value.trim() === "") {
+      todosLosFieldsLlenos = false;
+    }
+  });
+
+  // Get the "Enviar" button
+  const enviarBtn = document.getElementById('enviar');
+  
+  // Conditional: Enable button only if there are rows and all fields are filled
+  if (enviarBtn) {
+    if (numFilas > 0 && todosLosFieldsLlenos) {
+      enviarBtn.disabled = false;
+      console.log('✓ Botón "Enviar" habilitado. Todas las filas tienen campos completados.');
+    } else {
+      enviarBtn.disabled = true;
+      if (numFilas === 0) {
+        console.log('✗ Botón "Enviar" deshabilitado. No hay filas en el formulario.');
+      } else {
+        console.log('✗ Botón "Enviar" deshabilitado. Hay campos vacíos en las filas.');
+      }
+    }
+  }
+}
+
+// Call this function every time a relevant change occurs
+// Add these calls after every form change:
+// 1. After adding a row in agregarFilaDinamica()
+// 2. After deleting a row in eliminarFilaPorReferenciaOUnica()
+// 3. When the user fills in the "Talla" or "Cantidad" fields
+
+// Example of how to use it in your existing functions:
+// In agregarFilaDinamica(), add at the end:
+//   habilitarBotonEnviar();
+
+// In eliminarFilaPorReferenciaOUnica(), add in the setTimeout:
+//   habilitarBotonEnviar();
+
+// In your input event listeners, add:
+//   habilitarBotonEnviar();
   </script>
   <!---------------------Fin del Script de la orden de compra ------------------------>
 
@@ -717,7 +776,7 @@ function agregarFilaDinamica(referenciaValue = "") {
 
   tabla.appendChild(nuevaFila);
   contador++;
-  mostrarEstadoFormulario();
+  habilitarBotonEnviar();  // Add this line
 }
 
 // Unified delete function for both cases
@@ -775,6 +834,12 @@ function contarFilasReferencia(referencia) {
 }
 </script>
 <!-- Fin del Script para seleccion/aparición dinamica de checkboxes y filas del carrito -->  
-
+<script>
+document.addEventListener('change', function(e) {
+  if (e.target.id.startsWith('tallas-') || e.target.id.startsWith('cantidad-')) {
+    habilitarBotonEnviar();
+  }
+});
+</script>
 </body>
 </html>
