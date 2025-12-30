@@ -1,37 +1,23 @@
-# MaríaE MVP — Cómo iniciar la aplicación ✅
+# MaríaE MVP
 
-Esta guía explica las distintas formas de iniciar la aplicación teniendo en cuenta los scripts definidos en `package.json`.
+A minimal guide to run the MaríaE web app (server + front-end) locally.
 
-## Resumen
-- `server.js` (ubicado en `MariaE_API/routes/server.js`) es el punto de entrada del servidor Express. Usa `dotenv` para cargar variables de entorno (por ejemplo `SERVER_PORT`).
+## Prerequisites
+- Node.js 16+ (or compatible)
+- npm (or yarn)
+- MariaDB / MySQL running and accessible
+- (optional) nodemon installed globally for convenience
 
-## Comandos recomendados (desde la raíz del proyecto)
-
-### Producción / ejecución simple
-- `npm start`  
-  Ejecuta: `node MariaE_API/routes/server.js`.
-
-### Desarrollo (reinicio automático)
-- `npm run dev`  
-  Ejecuta: `nodemon MariaE_API/routes/server.js` — reinicia automáticamente cuando detecta cambios en el código.
-
-> Alternativa sin usar `npm` scripts:
-> - `npx nodemon MariaE_API/routes/server.js`  
-> - o `nodemon MariaE_API/routes/server.js` si tienes `nodemon` instalado globalmente.
-
-## Ejecutar desde la carpeta `MariaE_API/routes` (donde está `server.js`)
-- `node server.js`  
-- `npx nodemon server.js` (desarrollo)
-
-## Nota sobre `npm test`
-- El script `test` ha sido **modificado** a un placeholder seguro:  
-  `"test": "echo \"No tests\" && exit 0"`  
-  Esto evita fallos en procesos CI si no hay pruebas definidas. `npm test` imprimirá "No tests" y saldrá con código 0.
-
-## Variables de entorno (archivo `.env` en la raíz)
-Asegúrate de tener un `.env` con al menos las siguientes variables:
-
+## Setup
+1. Clone the repo and install dependencies:
+```bash
+git clone <repo-url>
+cd MariaE_MVP
+npm install
 ```
+
+2. Add a `.env` in the project root (example):
+```env
 SERVER_PORT=10000
 DB_HOST=localhost
 DB_USER=root
@@ -40,12 +26,34 @@ DB_NAME=mariae_fashiongirls
 DB_PORT=3306
 ```
 
-## Salida esperada
-Cuando la app arranca correctamente verás en consola algo similar a:
+## Scripts & How to run
+- Production / simple:
+  - `npm start`  
+    (runs `node MariaE_API/routes/server.js`)
+
+- Development (auto-restart on changes):
+  - `npm run dev`  
+    (runs `nodemon MariaE_API/routes/server.js`)
+
+- Test:
+  - `npm test`  
+    Currently a placeholder: prints `No tests` and exits with code 0.
+
+- Directly (when in `MariaE_API/routes`):
+  - `node server.js`
+  - `npx nodemon server.js`
+
+## Notes
+- `server.js` uses `dotenv` to load environment variables.
+- Use `npm run dev` for faster local development (nodemon restarts on file changes).
+- If you need Windows-friendly env scripting, add `cross-env` and update the `dev` script accordingly.
+
+## Expected output
+When the server starts successfully you'll see something similar to:
 ```
 Servidor ejecutándose en http://localhost:10000
 ```
 
 ---
 
-Si quieres, puedo añadir instrucciones para ejecutar con `cross-env` o un `dev` script específico para Windows. ¿Deseas que lo incluya? 🔧
+If you want, I can add commands for migrations, tests, or a Windows-specific `dev` script—tell me which one to include.
