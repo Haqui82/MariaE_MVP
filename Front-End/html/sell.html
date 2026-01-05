@@ -124,16 +124,28 @@
   <!-- Inicio del Carrito de Compras -->
 
 <!-------------------------------------------------->
+
+
+    <!-------------------------------------------->
+
 <!-- order section -->
-  <section class="order_section">
+  <section class="">
     <div class="container px-0">
       <div class="heading_container ">
         <h2 class="center-text">Orden De Compra</h2>
       </div>
     </div>
-    <div class="container container-bg">
-      <div class="row">        
-        <div class="col-md-6 col-lg-5 px-0">
+    <div class="container2 ">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 px-0">
+          <div class="map_container">
+            <h4>Vísitanos En Horario De Madrugón 3 a 10 A.M.</h4>
+            <div class="map-responsive">
+              <iframe src="https://www.google.com/maps?q=Centro+Comercial+El+GranSan,Bogota,Colombia&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+          </div>       
+        </div>
+        <div class="order col-md-6 col-lg-5 px-0">
           <form action="#">             
             <p>Escoja las referencias, las tallas y las cantidades a llevar.</p>
             <div>
@@ -164,14 +176,14 @@
               </button>
 
               <button id="enviar" disabled>
-                Enviar
+                Solicitar
               </button>
 
               <tr>
                 <th>
                   <style>
                     #total_strong {                      
-                      margin-left: 355px;
+                      margin-left: 570px;
                     }
 
                     #total_input {
@@ -179,14 +191,13 @@
                     }
                   </style>
                   <strong id="total_strong">Total:</strong>
-                  <input type="text" id="total_input"/>
-                  
+                  <input type="text" id="total_input"/>                  
                 </th>
-              </tr>              
+              </tr>                          
+              
             </div>  
             <!--------------------->
-            <div class="text-right">
-              <h4>Total: $<span id="cart-total">0</span> COP</h4>
+            <div class="text-right">              
               <button class="btn btn-success" id="checkout-btn" onclick="pagar(event)">Proceder al Pago</button>
             </div>  
             <!--------------------->        
@@ -195,12 +206,34 @@
       </div>
     </div>
   </section>
+
   <!-- end order section -->
 
-  <!-- info section -->
+    <!-------------------------------------------->
+    
 
+
+
+
+  
+  <!-- info section -->
   <section class="info_section  layout_padding2-top">
     <div class="social_container">
+      <!-------------------------------------------->
+<!-- User's Menu section -->
+<div class="container">
+    <h2 class="text-center">Bienvenid@:</h2>
+    <form id="registerForm">      
+      <button type="submit" class="btn btn-primary btn-block" id="ingresarButton">Ver historial de compras</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Modificar Datos</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Ingresar Cupón De Descuento</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Rastrear Su Compra</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Contáctenos (PQRS)</button>
+
+    </form>
+  </div>
+<!-- End of User's Menu section -->
+<!-------------------------------------------->
       <div class="social_box">
         <a href="">
           <i class="fa fa-facebook" aria-hidden="true"></i>

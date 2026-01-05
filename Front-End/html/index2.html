@@ -30,6 +30,16 @@
 </head>
 
 <body>
+<script>
+  (function() {
+    // Check possible storage keys and fallback to 'None'
+    const user =
+      sessionStorage.getItem('currentUser') ||
+      localStorage.getItem('currentUser') ||
+      null;
+    console.log('Actual User Is:', user || 'None');
+  })();
+</script>
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -380,7 +390,7 @@
           
           <!-- Botón comprar ahora --> 
            <div class="btn-box" id="btn_comprar">
-            <a href="sell2.html" id="buyNowBtn" class="disabled">
+            <a href="sell.html" id="buyNowBtn" class="disabled">
                Comprar Ahora
             </a>
           </div>
@@ -563,6 +573,10 @@
                 </g>
                 <g>
                 </g>
+                <g>
+                </g>
+                <g>
+                </g>
               </svg>
             </div>
             <div class="detail-box">
@@ -648,6 +662,8 @@
                     <path d="M373.333,234.667H352c-5.888,0-10.667,4.779-10.667,10.667S346.112,256,352,256h21.333
                  c5.888,0,10.667-4.779,10.667-10.667S379.221,234.667,373.333,234.667z" />
                   </g>
+                </g>
+                <g>
                 </g>
                 <g>
                 </g>
