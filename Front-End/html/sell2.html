@@ -124,7 +124,7 @@
   <!-- Inicio del Carrito de Compras -->
 
 <!-------------------------------------------------->
-<!-- order section -->
+<!-- order section 1-->
   <section class="order_section">
     <div class="container px-0">
       <div class="heading_container ">
@@ -132,7 +132,8 @@
       </div>
     </div>
     <div class="container container-bg">
-      <div class="row">        
+      <div class="row">  
+              
         <div class="col-md-6 col-lg-5 px-0">
           <form action="#">             
             <p>Escoja las referencias, las tallas y las cantidades a llevar.</p>
@@ -195,12 +196,111 @@
       </div>
     </div>
   </section>
-  <!-- end order section -->
+  <!-- end order section 1 -->
 
+    <!-------------------------------------------->
+
+<!-- order section 2-->
+  <section class="">
+    <div class="container px-0">
+      <div class="heading_container ">
+        <h2 class="center-text">Orden De Compra</h2>
+      </div>
+    </div>
+    <div class="container container-bg">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 px-0">
+          <div class="map_container">
+            <div class="map-responsive">
+              <iframe src="https://www.google.com/maps?q=Centro+Comercial+El+GranSan,Bogota,Colombia&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+            </div>
+          </div>       
+        </div>
+        <div class="col-md-6 col-lg-5 px-0">
+          <form action="#">             
+            <p>Escoja la(s) referencia(s), la(s) talla(s) y cantidad(es) a llevar.</p>
+
+            <div>
+              <table id="dataTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Referencia</th>
+                    <th>Talla</th>
+                    <th>Cantidad</th>
+                    <th>Valor Unidad</th>
+                    <th>Costo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>                   
+                    <!-- la estructura y cantidad de las filas -->
+                    <!--  se crea al usar el botón con "id=plus" -->
+                    <!--  y hacer uso de la función "agregarFila()" --> 
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex">
+              <button id="plus" onclick="agregarFila()">
+                +
+              </button>
+
+              <button id="enviar" disabled>
+                Enviar
+              </button>
+
+              <tr>
+                <th>
+                  <style>
+                    #total_strong {                      
+                      margin-left: 355px;
+                    }
+
+                    #total_input {
+                      max-width: 110px; /* Define el ancho máximo del input */
+                    }
+                  </style>
+                  <strong id="total_strong">Total:</strong>
+                  <input type="text" id="total_input"/>
+                </th>
+              </tr>
+            </div>            
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end order section 2-->
+
+    <!-------------------------------------------->
+    
+
+
+
+
+  
   <!-- info section -->
-
   <section class="info_section  layout_padding2-top">
     <div class="social_container">
+      <!-------------------------------------------->
+<!-- User's Menu section -->
+<div class="container">
+    <h2 class="text-center">Bienvenid@:</h2>
+    <form id="registerForm">      
+      <button type="submit" class="btn btn-primary btn-block" id="ingresarButton">Ver historial de compras</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Modificar Datos</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Ingresar Cupón De Descuento</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Rastrear Su Compra</button>
+      <button type="button" class="btn btn-primary btn-block" id="registerButton" onclick="window.location.href='register.html';">Contáctenos (PQRS)</button>
+
+    </form>
+  </div>
+<!-- End of User's Menu section -->
+<!-------------------------------------------->
       <div class="social_box">
         <a href="">
           <i class="fa fa-facebook" aria-hidden="true"></i>

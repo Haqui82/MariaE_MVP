@@ -124,16 +124,28 @@
   <!-- Inicio del Carrito de Compras -->
 
 <!-------------------------------------------------->
+
+
+    <!-------------------------------------------->
+
 <!-- order section -->
-  <section class="order_section">
+  <section class="">
     <div class="container px-0">
       <div class="heading_container ">
         <h2 class="center-text">Orden De Compra</h2>
       </div>
     </div>
-    <div class="container container-bg">
-      <div class="row">        
-        <div class="col-md-6 col-lg-5 px-0">
+    <div class="container2 ">
+      <div class="row">
+        <div class="col-lg-7 col-md-6 px-0">
+          <div class="map_container">
+            <h4>Vísitanos En Horario De Madrugón 3 a 10 A.M.</h4>
+            <div class="map-responsive">
+              <iframe src="https://www.google.com/maps?q=Centro+Comercial+El+GranSan,Bogota,Colombia&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+          </div>       
+        </div>
+        <div class="order col-md-6 col-lg-5 px-0">
           <form action="#">             
             <p>Escoja las referencias, las tallas y las cantidades a llevar.</p>
             <div>
@@ -164,14 +176,14 @@
               </button>
 
               <button id="enviar" disabled>
-                Enviar
+                Solicitar
               </button>
 
               <tr>
                 <th>
                   <style>
                     #total_strong {                      
-                      margin-left: 355px;
+                      margin-left: 570px;
                     }
 
                     #total_input {
@@ -179,94 +191,16 @@
                     }
                   </style>
                   <strong id="total_strong">Total:</strong>
-                  <input type="text" id="total_input"/>
-                  
+                  <input type="text" id="total_input"/>                  
                 </th>
-              </tr>              
+              </tr>                          
+              
             </div>  
             <!--------------------->
-            <div class="text-right">
-              <h4>Total: $<span id="cart-total">0</span> COP</h4>
+            <div class="text-right">              
               <button class="btn btn-success" id="checkout-btn" onclick="pagar(event)">Proceder al Pago</button>
             </div>  
             <!--------------------->        
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- end order section -->
-
-    <!-------------------------------------------->
-
-<!-- order section -->
-  <section class="">
-    <div class="container px-0">
-      <div class="heading_container ">
-        <h2 class="center-text">Orden De Compra</h2>
-      </div>
-    </div>
-    <div class="container container-bg">
-      <div class="row">
-        <div class="col-lg-7 col-md-6 px-0">
-          <div class="map_container">
-            <div class="map-responsive">
-              <iframe src="https://www.google.com/maps?q=Centro+Comercial+El+GranSan,Bogota,Colombia&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-
-            </div>
-          </div>       
-        </div>
-        <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">             
-            <p>Escoja la(s) referencia(s), la(s) talla(s) y cantidad(es) a llevar.</p>
-
-            <div>
-              <table id="dataTable">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Referencia</th>
-                    <th>Talla</th>
-                    <th>Cantidad</th>
-                    <th>Valor Unidad</th>
-                    <th>Costo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>                   
-                    <!-- la estructura y cantidad de las filas -->
-                    <!--  se crea al usar el botón con "id=plus" -->
-                    <!--  y hacer uso de la función "agregarFila()" --> 
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="d-flex">
-              <button id="plus" onclick="agregarFila()">
-                +
-              </button>
-
-              <button id="enviar" disabled>
-                Enviar
-              </button>
-
-              <tr>
-                <th>
-                  <style>
-                    #total_strong {                      
-                      margin-left: 355px;
-                    }
-
-                    #total_input {
-                      max-width: 110px; /* Define el ancho máximo del input */
-                    }
-                  </style>
-                  <strong id="total_strong">Total:</strong>
-                  <input type="text" id="total_input"/>
-                </th>
-              </tr>
-            </div>            
           </form>
         </div>
       </div>

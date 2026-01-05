@@ -1065,11 +1065,24 @@ margin-top: -27px;
 }
 
 /*---sell.html - order section---*/
-.order_section {
-  margin-bottom: 100px;
+.container {
+  margin-top: 30px;
+}
+
+.container2 {
+  margin-left: 300px;
+  }
+
+.order{
+  margin-left:-350px;
+  margin-top: 20px
+}
+
+.text-right {
+  margin-top: 20px;
+  margin-right: 150px;  
 }
 /*---End of sell.html - order section---*/
-
 /*---End of sell.html---*/
 
 /* footer section*/
