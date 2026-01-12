@@ -31,15 +31,14 @@
 
 <body>
 <script>
-  (function() {
-    // Check possible storage keys and fallback to 'None'
-    const user =
-      sessionStorage.getItem('currentUser') ||
-      localStorage.getItem('currentUser') ||
-      null;
-    console.log('Actual User Is:', user || 'None');
-  })();
-</script>
+  // Invoke UserVerification at the start of <body>. If the function is not yet loaded,
+  // set a marker for `custom.js` to call it once it loads.
+  if (typeof UserVerification === 'function') {
+    UserVerification();
+  } else {
+    window.__runUserVerificationOnLoad = true;
+  }
+</script> 
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -1004,8 +1003,7 @@
   <!-- SCRIPT SECTION -->
   <script src="../js/jquery-3.4.1.min.js"></script>
   <script src="../js/bootstrap.js"></script>
-  <script src="../https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <script src="../js/custom.js"></script>
   
   <!--Scripts for the modal windows-->
@@ -1120,6 +1118,20 @@
         buyNowBtn.classList.add('disabled');
       }
     });
+  });
+
+  // Redirección condicional al hacer clic en "Comprar Ahora"
+  document.getElementById('buyNowBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    // Prefer calling the central UserVerification() if available
+    const user = (typeof UserVerification === 'function') ? UserVerification() : (sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser') || null);
+
+    // Si no hay usuario, redirigir a ingresar; si existe, ir a sell.html
+    if (!user || user === 'None') {
+      window.location.href = 'ingresar.html';
+    } else {
+      window.location.href = 'sell.html';
+    }
   });
 </script>
   <!--End of Scripts for the check-boxes-->
