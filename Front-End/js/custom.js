@@ -27,3 +27,26 @@ $('.owl-carousel').owlCarousel({
         }
     }
 })
+
+// UserVerification: centralized user-checking function used by multiple pages
+// Returns the current user (string) or null and logs the same message used across pages.
+function UserVerification() {
+    // Prevent duplicate logs when called multiple times during page lifecycle
+    if (window.__userVerificationRan) return window.currentUser || null;
+    window.__userVerificationRan = true;
+
+    var user = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser') || null;
+    console.log('Actual User Is:', user || 'None');
+    // Expose for quick access if needed elsewhere
+    window.currentUser = user;
+    return user;
+}
+
+// If some page requested the function to run early (marker set at top of <body>), run it now
+if (window.__runUserVerificationOnLoad) {
+    UserVerification();
+    delete window.__runUserVerificationOnLoad;
+}
+
+// Also ensure it runs when custom.js loads (covers Live Server startup cases)
+UserVerification();
