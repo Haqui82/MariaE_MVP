@@ -55,5 +55,3 @@ Servidor ejecutándose en http://localhost:10000
 ```
 
 ---
-
-If you want, I can add commands for migrations, tests, or a Windows-specific `dev` script—tell me which one to include.

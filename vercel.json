@@ -6,13 +6,13 @@
       "use": "@vercel/node"
     },
     {
-      "src": "Front-End/html/**",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "MariaE_API/routes/server.js" },
-    { "src": "/", "dest": "Front-End/html/index.html" },
-    { "src": "/(.*)", "dest": "Front-End/html/index.html" }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

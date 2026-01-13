@@ -4,11 +4,14 @@
   "main": "MariaE_API/routes/server.js",
   "author": "haqui82",
   "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "node MariaE_API/routes/server.js",
     "dev": "nodemon MariaE_API/routes/server.js",
     "test": "echo \"No tests\" && exit 0",
-    "build": "echo 'No build step required'"
+    "build": "node scripts/build.js"
   },
   "static": {
     "public": "Front-End/html"
