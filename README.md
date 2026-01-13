@@ -53,5 +53,3 @@ When the server starts successfully you'll see something similar to:
 ```
 Servidor ejecutándose en http://localhost:10000
 ```
-
----
