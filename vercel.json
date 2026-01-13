@@ -6,9 +6,8 @@
       "use": "@vercel/node"
     },
     {
-      "src": "Front-End/html/index.html",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "Front-End/html" }
+      "src": "Front-End/html/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
