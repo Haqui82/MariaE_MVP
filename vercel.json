@@ -13,6 +13,15 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "MariaE_API/routes/server.js" },
+    { "src": "/css/(.*)", "dest": "/css/$1" },
+    { "src": "/js/(.*)", "dest": "/js/$1" },
+    { "src": "/images/(.*)", "dest": "/images/$1" },
+    { "src": "/fonts/(.*)", "dest": "/fonts/$1" },
+    { "src": "/imagenes/(.*)", "dest": "/imagenes/$1" },
+    { "src": "/(.*\\.html)$", "dest": "/$1" },
+    { "src": "/(.*\\.css)$", "dest": "/$1" },
+    { "src": "/(.*\\.js)$", "dest": "/$1" },
+    { "src": "/(.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.svg|.*\\.ico)$", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
