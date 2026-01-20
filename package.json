@@ -10,11 +10,7 @@
   "scripts": {
     "start": "node MariaE_API/routes/server.js",
     "dev": "nodemon MariaE_API/routes/server.js",
-    "test": "echo \"No tests\" && exit 0",
-    "build": "node scripts/build.js"
-  },
-  "static": {
-    "public": "Front-End/html"
+    "test": "echo \"No tests\" && exit 0"
   },
   "dependencies": {
     "cors": "^2.8.5",
