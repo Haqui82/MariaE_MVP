@@ -400,7 +400,7 @@ a:focus {
       -ms-flex-pack: center;
           justify-content: center;
   margin-top: 45px;
-  margin-left: 200px;
+  margin-left: 480px;
 }
 
 .shop_section .btn-box a {
@@ -859,9 +859,7 @@ margin-top: -27px;
 
 .btn-container {
   display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-left: 300px; /* Ajusta este valor según el espaciado deseado */
+  justify-content: center;  
 }
 
 .btn-container2 {
