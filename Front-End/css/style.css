@@ -681,6 +681,12 @@ a:focus {
   height: 100%;
 }
 
+.whatsapp {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
 .client_section .heading_container {
   margin-bottom: 20px;
 }
