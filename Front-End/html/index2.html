@@ -27,19 +27,20 @@
   <link href="../css/style.css" rel="stylesheet"/>
   <!-- responsive style -->
   <link href="../css/responsive.css" rel="stylesheet" />
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 <script>
-  (function() {
-    // Check possible storage keys and fallback to 'None'
-    const user =
-      sessionStorage.getItem('currentUser') ||
-      localStorage.getItem('currentUser') ||
-      null;
-    console.log('Actual User Is:', user || 'None');
-  })();
-</script>
+  // Invoke UserVerification at the start of <body>. If the function is not yet loaded,
+  // set a marker for `custom.js` to call it once it loads.
+  if (typeof UserVerification === 'function') {
+    UserVerification();
+  } else {
+    window.__runUserVerificationOnLoad = true;
+  }
+</script> 
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -56,26 +57,28 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav  ">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">Inicio <span class="sr-only">(current)</span></a>
-            </li>
+            <!--<li class="nav-item active">
+              <a class="nav-link" href="index.html">
+                Inicio <span class="sr-only">(current)</span>
+              </a>
+            </li>--> 
             <li class="nav-item">
-              <a class="nav-link" href="shop.html">
+              <a class="nav-link" href="#gallery">
                 Tienda
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="why.html">
+              <a class="nav-link" href="#nosotros">
                 Nosotros
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="testimonial.html">
+              <a class="nav-link" href="#testimonios">
                 Testimonios
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">
+              <a class="nav-link" href="#contáctanos">
                 Contáctenos
               </a>
             </li>
@@ -87,14 +90,9 @@
                 Ingresar
               </span>
             </a>
-            <a href="shop.html">
+            <a href="#gallery">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-            </a>
-            <form class="form-inline ">
-              <button class="btn nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+            </a>            
           </div>
         </div>
       </nav>
@@ -119,7 +117,7 @@
                         ¡Hola, pequeñas fashionistas y maravillosas mamás! 💕<br><br>
                         ¿Están listas para agregarle un poco de magia ✨ al guardarropa de su pequeña?
                       </p>
-                      <a href="contact.html">
+                      <a href="#contáctanos">
                         Contáctanos
                       </a>
                     </div>
@@ -146,7 +144,7 @@
                         Confeccionadas con tela transpirable de primera calidad, son perfectas para las citas de juegos, la escuela y las volteretas espontáneas en el parque. 🎠🏃‍♂️ 🤸‍♀️<br><br>
                         <strong>Diseños adorables:</strong> desde delicadas mariposas bordadas hasta arcoíris extravagantes, nuestros jeans están salpicados de alegría. ¡Tu pequeña se sentirá como si estuviera bailando en un jardín mágico! 🌼
                       </p>
-                      <a href="contact.html">
+                      <a href="#contáctanos">
                         Contáctenos
                       </a>
                     </div>
@@ -173,7 +171,7 @@
                         Lo entendemos, mamás; los niños son fuerzas imparables de la naturaleza. Es por eso que nuestros jeans están diseñados para soportar trepar árboles, hacer pasteles de barro y aventuras de superhéroes. 🪁<br><br>
                         <strong>Cinturillas elásticas:</strong>¡porque la comodidad es importante! Nuestras cinturillas elásticas garantizan un ajuste ceñido sin comprometer la libertad. ¡No más botones complicados, solo niños felices! 😊❤️
                       </p>
-                      <a href="contact.html">
+                      <a href="#contáctanos">
                         Contáctenos
                       </a>
                     </div>
@@ -381,16 +379,9 @@
         
         <!-- Botones de las fotos -->
         <div class="btn-container">
-          <!-- Boton todos los productos-->
-          <div class="btn-box">
-            <a href="shop.html" id="viewProductsBtn"> 
-              Ver Todos Los Productos 
-            </a>
-          </div>
-          
-          <!-- Botón comprar ahora --> 
+           <!-- Botón comprar ahora --> 
            <div class="btn-box" id="btn_comprar">
-            <a href="sell.html" id="buyNowBtn" class="disabled">
+            <a href="" id="buyNowBtn" class="disabled">
                Comprar Ahora
             </a>
           </div>
@@ -458,12 +449,25 @@
                 Los efectos secundarios incluyen una sobrecarga de ternura extrema. 😄
               </p>
               <div class="btn-box">
-                <a href="shop.html" class="btn1">
+                <a href="ingresar.html" class="btn1">
                   Comprar Ahora
-                </a>
-                <a href="#" class="btn2">
-                  Ver Más
-                </a>
+                </a>                
+              </div>
+              <div class="social_container">
+                  <div class="social_box">
+
+                    <a href="https://web.facebook.com/people/Jeans-Maria-e/61560507869528/?sk=followers" target="_blank">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@maria.e..girls.fa?_r=1&_t=ZS-9BGEd0v40Wa" target="_blank">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/jeansmaria_e/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>  
               </div>
             </div>
           </div>
@@ -478,7 +482,7 @@
 
   <section class="why_section layout_padding">
     <div class="container">
-      <div class="heading_container heading_center">
+      <div class="heading_container heading_center" id="nosotros">
         <h2>
           Porque Comprar Con Nosotros
         </h2>
@@ -772,12 +776,25 @@
                 ¡Descubre nuestras opciones y haz que cada ocasión sea memorable!
               </p>
               <div class="btn-box">
-                <a href="shop.html" class="btn1">
+                <a href="ingresar.html" class="btn1">
                   Comprar Ahora
-                </a>
-                <a href="#" class="btn2">
-                  Ver Más
-                </a>
+                </a>                
+              </div>
+                <div class="social_container">
+                  <div class="social_box">
+
+                    <a href="https://web.facebook.com/people/Jeans-Maria-e/61560507869528/?sk=followers" target="_blank">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@maria.e..girls.fa?_r=1&_t=ZS-9BGEd0v40Wa" target="_blank">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/jeansmaria_e/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>  
               </div>
             </div>
           </div>
@@ -791,7 +808,7 @@
 
   <section class="contact_section ">
     <div class="container px-0">
-      <div class="heading_container ">
+      <div class="heading_container" id="contáctanos">
         <h2 class="center-text">Contáctenos</h2>
       </div>
     </div>
@@ -799,10 +816,11 @@
       <div class="row">
         <div class="col-lg-7 col-md-6 px-0">
           <div class="map_container">
+            <h4>Vísitanos En Horario De Madrugón 3 a 10 A.M.</h4>
             <div class="map-responsive">
               <iframe src="https://www.google.com/maps?q=Centro+Comercial+El+GranSan,Bogota,Colombia&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
-        </div>       
+          </div>       
         </div>
         <div class="col-md-6 col-lg-5 px-0">
           <form action="#">
@@ -817,6 +835,9 @@
             </div>
             <div>
               <input type="text" class="message-box" placeholder="Mensage" />
+            </div>
+            <div class="whatsapp">
+              <h5>Whatsapp +57 300 331 9101</h5>
             </div>
             <div class="d-flex ">
               <button>
@@ -833,7 +854,7 @@
   <!-- client section -->
   <section class="client_section layout_padding">
     <div class="container">
-      <div class="heading_container heading_center">
+      <div class="heading_container heading_center" id="testimonios"> 
         <h2>
           Testimonios
         </h2>
@@ -916,21 +937,21 @@
 
   <section class="info_section  layout_padding2-top">
     <div class="social_container">
-      <div class="social_box">
-        <a href="">
-          <i class="fa fa-facebook" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-twitter" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-instagram" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-youtube" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
+                  <div class="social_box">
+
+                    <a href="https://web.facebook.com/people/Jeans-Maria-e/61560507869528/?sk=followers" target="_blank">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@maria.e..girls.fa?_r=1&_t=ZS-9BGEd0v40Wa" target="_blank">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/jeansmaria_e/" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>  
+              </div>
     <div class="info_container ">
       <div class="container">
         <div class="row">
@@ -976,7 +997,7 @@
               </a>
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>+57 300 331 9101</span>
+                <span>W.A.  +57 300 331 9101</span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -991,7 +1012,7 @@
     <footer class=" footer_section">
       <div class="container">
         <p>
-          &copy; <span id="displayYear"></span> All Rights Reserved By mr.haqui82@gmail.com and
+          &copy; <span id="displayYear"></span> By mr.haqui82@gmail.com and
           <a href="https://html.design/">Free Html Templates</a>
         </p>
       </div>
@@ -1003,8 +1024,7 @@
   <!-- SCRIPT SECTION -->
   <script src="../js/jquery-3.4.1.min.js"></script>
   <script src="../js/bootstrap.js"></script>
-  <script src="../https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <script src="../js/custom.js"></script>
   
   <!--Scripts for the modal windows-->
@@ -1119,6 +1139,20 @@
         buyNowBtn.classList.add('disabled');
       }
     });
+  });
+
+  // Redirección condicional al hacer clic en "Comprar Ahora"
+  document.getElementById('buyNowBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    // Prefer calling the central UserVerification() if available
+    const user = (typeof UserVerification === 'function') ? UserVerification() : (sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser') || null);
+
+    // Si no hay usuario, redirigir a ingresar; si existe, ir a sell.html
+    if (!user || user === 'None') {
+      window.location.href = 'ingresar.html';
+    } else {
+      window.location.href = 'sell.html';
+    }
   });
 </script>
   <!--End of Scripts for the check-boxes-->
