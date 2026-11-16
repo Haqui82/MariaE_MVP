@@ -211,7 +211,8 @@
 
         // Compara los datos ingresados con los datos del JSON
         if (numDoc === data.num_doc_cliente && password === data.password_cliente) {
-          window.location.href = 'sell.html'; // Redirige a otra página
+          UserVerification(numDoc);
+          window.location.href = 'ingresar.html'; // Redirige a otra página
         } else {
           alert('Usuario no encontrado');        
         }
@@ -246,6 +247,19 @@
 
   <!-- Custom Scripts -->
   <script src="../js/custom.js"></script>
+  <script>
+    function UserVerification(docNumId) {
+      const user = docNumId || localStorage.getItem('currentUser');
+
+      if (docNumId) {
+        localStorage.setItem('currentUser', docNumId);
+      }
+
+      console.log('Actual User Is:', user || 'None');
+      window.currentUser = user || null;
+      return window.currentUser;
+    }
+  </script>
   <script src="../js/scripts.js"></script>
 </body>
 </html>
