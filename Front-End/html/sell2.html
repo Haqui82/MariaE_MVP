@@ -640,8 +640,10 @@ function mostrarEstadoFormulario() {
     }
   });
   const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+  const userId = localStorage.getItem('currentUser');
   console.clear();
   console.log('Estado actual del formulario:');
+  console.log('ID de usuario:', userId);
   console.log('selectedIds:', selectedIds);
   console.log('Número total de filas:', numFilas);
   console.log('Cantidad de filas por referencia:', referencias);
