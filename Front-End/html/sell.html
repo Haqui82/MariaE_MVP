@@ -59,7 +59,7 @@
           </li>
         </ul>
         <div class="user_option">
-          <a href="sell.html">
+          <a href="ingresar.html">
             <i class="fa fa-user" aria-hidden="true"></i>
             <span>Ingresar</span>
           </a>
@@ -640,8 +640,10 @@ function mostrarEstadoFormulario() {
     }
   });
   const selectedIds = JSON.parse(sessionStorage.getItem('selectedCheckboxIds') || '[]');
+  const userId = localStorage.getItem('currentUser');
   console.clear();
   console.log('Estado actual del formulario:');
+  console.log('ID de usuario:', userId);
   console.log('selectedIds:', selectedIds);
   console.log('Número total de filas:', numFilas);
   console.log('Cantidad de filas por referencia:', referencias);
