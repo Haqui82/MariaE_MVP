@@ -258,6 +258,17 @@ a:focus {
       margin-left: 5px;
     }
   }
+
+  .user_identity {
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+    color: $black;
+
+    span {
+      margin-left: 5px;
+    }
+  }
 }
 
 /*end header section*/
