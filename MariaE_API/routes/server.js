@@ -8,6 +8,7 @@ const config = require('../config/config'); // Importa la configuración central
 
 const app = express();
 const port = config.server_port || 10000; // Usar SERVER_PORT o 10000 por defecto
+const frontEndPath = path.join(__dirname, '..', '..', 'Front-End');
 
 // Middleware
 app.use(cors());
@@ -25,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 // Servir archivos estáticos desde el directorio 'Front-End'
-app.use(express.static(path.join(__dirname, '..', 'Front-End')));
+app.use(express.static(frontEndPath));
 
 // Importar y usar las rutas de post.js con el prefijo /api
 const postRoutes = require('./post.js');
@@ -33,7 +34,7 @@ app.use('/api', postRoutes);
 
 // Ruta para servir el archivo index.html desde su nueva ubicación
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'Front-End', 'html', 'index.html'));
+  res.sendFile(path.join(frontEndPath, 'html', 'index.html'));
 });
 
 // Conectar a la base de datos usando Sequelize

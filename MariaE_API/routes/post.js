@@ -20,6 +20,55 @@ router.post('/create', async (req, res) => {
   }
 });
 
+router.post('/contactos', async (req, res) => {
+  const { nombre, email, telefono, mensaje } = req.body || {};
+  const values = [nombre, email, telefono, mensaje];
+
+  if (values.some(value => typeof value !== 'string' || value.trim() === '')) {
+    return res.status(400).json({
+      success: false,
+      message: 'Todos los campos son obligatorios'
+    });
+  }
+
+  const [cleanNombre, cleanEmail, cleanTelefono, cleanMensaje] = values.map(value => value.trim());
+
+  if (cleanNombre.length > 100) {
+    return res.status(400).json({
+      success: false,
+      message: 'El nombre no puede superar los 100 caracteres'
+    });
+  }
+
+  if (cleanEmail.length > 150 || !/^[^\s@]+@[^\s@]+$/.test(cleanEmail)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Verifica que el correo electrónico sea válido y no supere los 150 caracteres'
+    });
+  }
+
+  if (cleanTelefono.length > 20) {
+    return res.status(400).json({
+      success: false,
+      message: 'El teléfono no puede superar los 20 caracteres'
+    });
+  }
+
+  try {
+    await sequelize.query(
+      'INSERT INTO contactos (nombre, email, telefono, mensaje) VALUES (?, ?, ?, ?)',
+      { replacements: [cleanNombre, cleanEmail, cleanTelefono, cleanMensaje] }
+    );
+    res.status(201).json({ success: true, message: 'Mensaje enviado correctamente' });
+  } catch (error) {
+    console.error('Error al guardar el mensaje de contacto:', error);
+    res.status(500).json({
+      success: false,
+      message: 'No se pudo enviar el mensaje. Inténtalo de nuevo más tarde.'
+    });
+  }
+});
+
 
 // Función para crear una entrada en cualquier tabla
 async function createEntry(table, columns, values) {
