@@ -81,6 +81,9 @@
                 Ingresar
               </span>
             </a>
+            <a id="logoutLink" href="index.html" hidden onclick="localStorage.removeItem('currentUser'); sessionStorage.removeItem('currentUser');">
+              <span>Cerrar Sesión</span>
+            </a>
             <a href="#gallery">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>            
@@ -814,27 +817,28 @@
           </div>       
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
+          <form id="contactForm" action="#">
             <div>
-              <input type="text" placeholder="Nombre" />
+              <input type="text" name="nombre" placeholder="Nombre" maxlength="100" required />
             </div>
             <div>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="email" placeholder="Email" maxlength="150" required />
             </div>
             <div>
-              <input type="text" placeholder="Teléfono" />
+              <input type="tel" name="telefono" placeholder="Teléfono" maxlength="20" required />
             </div>
             <div>
-              <input type="text" class="message-box" placeholder="Mensage" />
+              <textarea name="mensaje" class="message-box" placeholder="Mensaje" required></textarea>
             </div>
             <div class="whatsapp">
               <h5>Whatsapp +57 300 331 9101</h5>
             </div>
             <div class="d-flex ">
-              <button>
+              <button type="submit">
                 ENVIAR
               </button>
             </div>
+            <div id="contactFormStatus" role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>
@@ -1020,6 +1024,7 @@
   <script>
     const userId = localStorage.getItem('currentUser');
     document.getElementById('userIdDisplay').textContent = userId || 'Ingresar';
+    document.getElementById('logoutLink').hidden = !userId;
   </script>
   
   <!--Scripts for the modal windows-->
@@ -1153,5 +1158,51 @@
   });
 </script>
   <!--End of Scripts for the check-boxes-->
+  <script>
+    (() => {
+      const contactForm = document.getElementById('contactForm');
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const status = document.getElementById('contactFormStatus');
+      const localHosts = ['localhost', '127.0.0.1', '::1'];
+      const apiUrl = window.location.port === '10000'
+        ? '/api/contactos'
+        : window.location.protocol === 'file:' || localHosts.includes(window.location.hostname)
+          ? 'http://localhost:10000/api/contactos'
+          : '/api/contactos';
+
+      contactForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        submitButton.disabled = true;
+        status.textContent = 'Enviando mensaje...';
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              nombre: contactForm.elements.nombre.value,
+              email: contactForm.elements.email.value,
+              telefono: contactForm.elements.telefono.value,
+              mensaje: contactForm.elements.mensaje.value
+            })
+          });
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            status.textContent = result.message || 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
+            return;
+          }
+
+          contactForm.reset();
+          status.textContent = result.message;
+        } catch (error) {
+          console.error('Error al enviar el mensaje de contacto:', error);
+          status.textContent = 'No se pudo enviar el mensaje. Inténtalo de nuevo más tarde.';
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
