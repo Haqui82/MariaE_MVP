@@ -81,6 +81,9 @@
                 Ingresar
               </span>
             </a>
+            <a id="logoutLink" href="index.html" hidden onclick="localStorage.removeItem('currentUser'); sessionStorage.removeItem('currentUser');">
+              <span>Cerrar Sesión</span>
+            </a>
             <a href="#gallery">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>            
@@ -1020,6 +1023,7 @@
   <script>
     const userId = localStorage.getItem('currentUser');
     document.getElementById('userIdDisplay').textContent = userId || 'Ingresar';
+    document.getElementById('logoutLink').hidden = !userId;
   </script>
   
   <!--Scripts for the modal windows-->
