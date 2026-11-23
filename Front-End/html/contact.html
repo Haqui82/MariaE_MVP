@@ -56,7 +56,7 @@
               <i class="fa fa-user" aria-hidden="true"></i>
               <span id="userIdDisplay">Ingresar</span>
             </div>
-            <a href="index.html" onclick="localStorage.removeItem('currentUser'); sessionStorage.removeItem('currentUser');">
+            <a href="index.html" onclick="localStorage.removeItem('currentUser'); localStorage.removeItem('currentUserProfile'); sessionStorage.removeItem('currentUser');">
               <span>Cerrar Sesión</span>
             </a>
           </div>
@@ -89,24 +89,25 @@
         
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
+          <form class="contact-form" action="#">
             <div>
-              <input type="text" placeholder="Nombre" />
+              <input type="text" name="nombre" placeholder="Nombre" maxlength="100" required />
             </div>
             <div>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="email" placeholder="Email" maxlength="150" required />
             </div>
             <div>
-              <input type="text" placeholder="Teléfono" />
+              <input type="tel" name="telefono" placeholder="Teléfono" maxlength="20" required />
             </div>
             <div>
-              <input type="text" class="message-box" placeholder="Mensage" />
+              <textarea name="mensaje" class="message-box" placeholder="Mensaje" required></textarea>
             </div>
             <div class="d-flex ">
-              <button>
+              <button type="submit">
                 ENVIAR
               </button>
             </div>
+            <div class="contact-form-status" role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>

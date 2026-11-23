@@ -50,3 +50,108 @@ if (window.__runUserVerificationOnLoad) {
 
 // Also ensure it runs when custom.js loads (covers Live Server startup cases)
 UserVerification();
+
+// Shared contact form submission and registered-user prefill.
+(function initializeContactForms() {
+    var localHosts = ['localhost', '127.0.0.1', '::1'];
+    var apiUrl = window.location.port === '10000'
+        ? '/api/contactos'
+        : window.location.protocol === 'file:' || localHosts.includes(window.location.hostname)
+            ? 'http://localhost:10000/api/contactos'
+            : '/api/contactos';
+    var forms = Array.prototype.slice.call(document.querySelectorAll('.contact-form'));
+
+    function getCurrentProfile() {
+        var userId = localStorage.getItem('currentUser');
+        var storedProfile = localStorage.getItem('currentUserProfile');
+
+        if (!userId || !storedProfile) {
+            return null;
+        }
+
+        try {
+            var profile = JSON.parse(storedProfile);
+            return profile.documentNumber === userId ? profile : null;
+        } catch (error) {
+            console.error('No se pudo leer el perfil guardado del usuario:', error);
+            return null;
+        }
+    }
+
+    function fillForm(form, profile) {
+        form.elements.nombre.value = profile.nombre || '';
+        form.elements.email.value = profile.email || '';
+        form.elements.telefono.value = profile.telefono || '';
+        form.dataset.contactProfile = JSON.stringify(profile);
+    }
+
+    function refreshContactFormProfiles() {
+        var profile = getCurrentProfile();
+        var serializedProfile = profile ? JSON.stringify(profile) : '';
+
+        forms.forEach(function (form) {
+            if (form.dataset.contactProfile === serializedProfile) {
+                return;
+            }
+
+            if (profile) {
+                fillForm(form, profile);
+            } else if (form.dataset.contactProfile) {
+                form.elements.nombre.value = '';
+                form.elements.email.value = '';
+                form.elements.telefono.value = '';
+                delete form.dataset.contactProfile;
+            }
+        });
+    }
+
+    forms.forEach(function (form) {
+        var status = form.querySelector('.contact-form-status');
+        var submitButton = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            submitButton.disabled = true;
+            status.textContent = 'Enviando mensaje...';
+
+            try {
+                var response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: form.elements.nombre.value,
+                        email: form.elements.email.value,
+                        telefono: form.elements.telefono.value,
+                        mensaje: form.elements.mensaje.value
+                    })
+                });
+                var result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    status.textContent = result.message || 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
+                    return;
+                }
+
+                form.reset();
+                var profile = getCurrentProfile();
+                if (profile) {
+                    fillForm(form, profile);
+                }
+                status.textContent = result.message;
+            } catch (error) {
+                console.error('Error al enviar el mensaje de contacto:', error);
+                status.textContent = 'No se pudo enviar el mensaje. Inténtalo de nuevo más tarde.';
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    });
+
+    refreshContactFormProfiles();
+    window.addEventListener('pageshow', refreshContactFormProfiles);
+    window.addEventListener('storage', function (event) {
+        if (!event.key || event.key === 'currentUser' || event.key === 'currentUserProfile') {
+            refreshContactFormProfiles();
+        }
+    });
+})();
