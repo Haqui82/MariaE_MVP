@@ -153,11 +153,12 @@
               <h5>
                 NOTIFICACIONES
               </h5>
-              <form action="#">
-                <input type="email" placeholder="Ingresa tu email">
-                <button>
+              <form class="notification-form" action="#">
+                <input type="email" name="email" placeholder="Ingresa tu email" maxlength="150" required>
+                <button type="submit">
                   Subscribirse
                 </button>
+                <div class="notification-form-status" role="status" aria-live="polite"></div>
               </form>
             </div>
           </div>

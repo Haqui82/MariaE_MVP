@@ -69,6 +69,49 @@ router.post('/contactos', async (req, res) => {
   }
 });
 
+router.post('/notificaciones', async (req, res) => {
+  const body = req.body || {};
+  const email = typeof body.email === 'string' ? body.email.trim() : '';
+  const nombre = body.nombre == null
+    ? null
+    : typeof body.nombre === 'string'
+      ? body.nombre.trim()
+      : undefined;
+
+  if (!email || !/^[^\s@]+@[^\s@]+$/.test(email) || email.length > 150) {
+    return res.status(400).json({
+      success: false,
+      message: 'Ingresa un correo electrónico válido de máximo 150 caracteres'
+    });
+  }
+
+  if (nombre === undefined || (nombre && nombre.length > 100)) {
+    return res.status(400).json({
+      success: false,
+      message: 'El nombre no puede superar los 100 caracteres'
+    });
+  }
+
+  try {
+    await sequelize.query(
+      `INSERT INTO notificaciones (email, nombre, estado)
+       VALUES (?, ?, 'activo')
+       ON DUPLICATE KEY UPDATE
+         nombre = COALESCE(VALUES(nombre), nombre),
+         estado = 'activo',
+         fecha_actualizacion = CURRENT_TIMESTAMP`,
+      { replacements: [email, nombre || null] }
+    );
+    res.status(200).json({ success: true, message: 'Suscripción a notificaciones activada' });
+  } catch (error) {
+    console.error('Error al guardar la suscripción a notificaciones:', error);
+    res.status(500).json({
+      success: false,
+      message: 'No se pudo completar la suscripción. Inténtalo de nuevo más tarde.'
+    });
+  }
+});
+
 
 // Función para crear una entrada en cualquier tabla
 async function createEntry(table, columns, values) {
