@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
-<body>
+<body data-manual-carousel>
   <!-- header section starts -->
   <header class="header_section">
     <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -365,11 +365,12 @@
               <h5>
                 NOTIFICACIONES
               </h5>
-              <form action="#">
-                <input type="email" placeholder="Ingresa tu email">
-                <button>
+              <form class="notification-form" action="#">
+                <input type="email" name="email" placeholder="Ingresa tu email" maxlength="150" required>
+                <button type="submit">
                   Subscribirse
                 </button>
+                <div class="notification-form-status" role="status" aria-live="polite"></div>
               </form>
             </div>
           </div>
@@ -422,6 +423,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="../js/custom.js"></script>
   <script>
     document.getElementById('userIdDisplay').textContent = localStorage.getItem('currentUser') || 'Ingresar';
   </script>
